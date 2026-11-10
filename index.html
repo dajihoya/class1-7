@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>천문 시뮬레이션 모음</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<style>
+:root{--bg1:#e8efff;--bg2:#fff1f4;--ink:#2b2f55;--muted:#6b7099;--line:#dde2f7;--pink:#ff6f91;
+  --display:"Jua","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;--body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+html,body{background-color:var(--bg1);color:var(--ink);margin:0}
+body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cg opacity='.6'%3E%3Cpath d='M26 18l2.6 6.4L35 27l-6.4 2.6L26 36l-2.6-6.4L17 27l6.4-2.6z' fill='%23ffd166'/%3E%3Cpath d='M132 70l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z' fill='%23ff9ebb'/%3E%3Cpath d='M78 136l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z' fill='%239bb8ff'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(180deg,var(--bg1),var(--bg2));
+  min-height:100vh;font-family:var(--body);font-size:16px;line-height:1.6;padding:32px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;gap:14px;align-items:center}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,46px);margin:0;line-height:1.15}
+header p{margin:2px 0 0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:16px}
+a.card{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(90,100,170,.10);transition:transform .15s,box-shadow .15s}
+a.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(90,100,170,.18)}
+a.card:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.card h2{font-family:var(--display);font-weight:400;font-size:24px;margin:0}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.go{margin-top:auto;align-self:flex-start;font-family:var(--display);color:#fff;background:var(--pink);border-radius:999px;padding:4px 14px}
+.ico{width:56px;height:56px}
+@media (prefers-reduced-motion:reduce){a.card{transition:none}}
+</style>
+<div class="wrap">
+  <header>
+    <svg class="ico" viewBox="0 0 58 58" aria-hidden="true"><path d="M29 5l6.6 14.2 15.4 1.9-11.4 10.6 3 15.3L29 39.4 15.4 47l3-15.3L7 21.1l15.4-1.9z" fill="#ffd166" stroke="#2b2f55" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="26" r="2" fill="#2b2f55"/><circle cx="34" cy="26" r="2" fill="#2b2f55"/><path d="M24.5 31.5q4.5 4 9 0" fill="none" stroke="#2b2f55" stroke-width="2" stroke-linecap="round"/></svg>
+    <div><h1>천문 시뮬레이션 모음</h1><p>보고 싶은 자료를 골라 눌러 보세요.</p></div>
+  </header>
+  <div class="grid">
+    <a class="card" href="lesson.html"><h2>수업 슬라이드</h2><p>천구, 일주운동의 까닭, 방향·위도별 모습, 남중 고도, 태양의 일주운동까지 한 차시 수업 자료예요. ← → 키로 넘겨요.</p><span class="go">열기 →</span></a>
+    <a class="card" href="diurnal.html"><h2>천체의 일주운동</h2><p>지구를 가운데 둔 천구 모형을 돌리고 확대해 보며 위도와 계절에 따른 별과 태양의 하루 움직임을 살펴봐요.</p><span class="go">열기 →</span></a>
+    <a class="card" href="sun-annual.html"><h2>태양의 연주운동</h2><p>3D 공전 모형과 황도 12궁 별자리 띠로 태양이 별자리 사이를 옮겨 가는 모습과 계절별 밤하늘을 확인해요.</p><span class="go">열기 →</span></a>
+  </div>
+</div>
+
+</html>
