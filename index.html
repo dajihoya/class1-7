@@ -16,7 +16,7 @@ body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/20
 header{display:flex;gap:14px;align-items:center}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,46px);margin:0;line-height:1.15}
 header p{margin:2px 0 0;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;max-width:760px}
 a.card{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(90,100,170,.10);transition:transform .15s,box-shadow .15s}
 a.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(90,100,170,.18)}
 a.card:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
@@ -32,7 +32,6 @@ a.card:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
     <div><h1>천문 시뮬레이션 모음</h1><p>보고 싶은 자료를 골라 눌러 보세요.</p></div>
   </header>
   <div class="grid">
-    <a class="card" href="lesson.html"><h2>수업 슬라이드</h2><p>천구, 일주운동의 까닭, 방향·위도별 모습, 남중 고도, 태양의 일주운동까지 한 차시 수업 자료예요. ← → 키로 넘겨요.</p><span class="go">열기 →</span></a>
     <a class="card" href="diurnal.html"><h2>천체의 일주운동</h2><p>지구를 가운데 둔 천구 모형을 돌리고 확대해 보며 위도와 계절에 따른 별과 태양의 하루 움직임을 살펴봐요.</p><span class="go">열기 →</span></a>
     <a class="card" href="sun-annual.html"><h2>태양의 연주운동</h2><p>3D 공전 모형과 황도 12궁 별자리 띠로 태양이 별자리 사이를 옮겨 가는 모습과 계절별 밤하늘을 확인해요.</p><span class="go">열기 →</span></a>
   </div>
