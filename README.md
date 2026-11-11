@@ -4,7 +4,7 @@
 
 - `index.html` — 첫 화면 (과목 고르기)
 - `life-science/` — 생명과학 시뮬레이션 모음
-  - `nephron.html` — 네프론 오줌 공장
+  - `nephron.html` — 콩팥단위 오줌 공장
 - `earth-science/` — 지구과학 시뮬레이션 모음
   - `diurnal.html` — 천체의 일주운동 시뮬레이션
   - `sun-annual.html` — 태양의 연주운동 3D 시뮬레이션
