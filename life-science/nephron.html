@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}</style>
+<title>네프론 오줌 공장</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap">
+<style>
+/* Layout: 넓은 시뮬레이션 무대 + 오른쪽 해설 기둥, 아래에 정리표와 오줌이 나가는 길 (교실 화면에서 한눈에) */
+:root{
+  --bg:#ECF0FA; --panel:#FFFFFF; --panel-2:#F3F5FC; --stage:#F9FAFF;
+  --ink:#23263B; --muted:#5A6085; --line:#D5DBEE;
+  --vessel:#E3476A; --vessel-lumen:#FCDDE4; --tube:#E6B02A; --tube-lumen:#FFF3CB;
+  --c-filter:#3B78F2; --c-reab:#12996A; --c-secr:#E2641F; --on-stage:#FFFFFF; --warn:#D2364B;
+  --f-display:"Jua","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131626; --panel:#1C2034; --panel-2:#242940; --stage:#171B2C;
+    --ink:#ECEFFC; --muted:#A5ABCB; --line:#30365A;
+    --vessel:#FF6585; --vessel-lumen:#47202E; --tube:#EFC24A; --tube-lumen:#3A3117;
+    --c-filter:#76A2FF; --c-reab:#43D29A; --c-secr:#FF9858; --on-stage:#11142A; --warn:#FF6E80;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131626; --panel:#1C2034; --panel-2:#242940; --stage:#171B2C;
+  --ink:#ECEFFC; --muted:#A5ABCB; --line:#30365A;
+  --vessel:#FF6585; --vessel-lumen:#47202E; --tube:#EFC24A; --tube-lumen:#3A3117;
+  --c-filter:#76A2FF; --c-reab:#43D29A; --c-secr:#FF9858; --on-stage:#11142A; --warn:#FF6E80;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+.page{max-width:1260px;margin:0 auto;padding-block:28px 44px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:20px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* header */
+.top{display:flex;gap:16px;align-items:center}
+.top svg{flex:none;width:64px;height:64px}
+.eyebrow{margin:0;font-family:var(--f-display);font-size:14px;letter-spacing:.08em;color:var(--muted)}
+h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4.2vw,44px);line-height:1.1;text-wrap:balance}
+.lede{margin:6px 0 0;color:var(--muted);max-width:62ch}
+
+/* main grid */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;align-items:start}
+@media (max-width:1000px){.layout{grid-template-columns:minmax(0,1fr)}}
+
+.stage-wrap{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.stage-wrap:fullscreen{border-radius:0;border:0;padding:18px;height:100%;background:var(--panel)}
+.stage-wrap:fullscreen .canvas-box{flex:1;min-height:0}
+.stage-wrap::backdrop{background:var(--panel)}
+
+.stage-bar{display:flex;flex-wrap:wrap;gap:8px}
+.seg{font-family:var(--f-display);font-size:16px;line-height:1;border:2px solid var(--line);background:var(--panel-2);color:var(--ink);border-radius:999px;padding:9px 14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;transition:background .15s,border-color .15s}
+.seg:hover{border-color:var(--sc,var(--ink))}
+.seg[aria-pressed="true"]{background:var(--sc,var(--ink));border-color:var(--sc,var(--ink));color:var(--on-stage)}
+.seg.all{--sc:var(--ink)}
+.seg.all[aria-pressed="true"]{color:var(--panel)}
+.seg .cnt{font-variant-numeric:tabular-nums;font-size:13px;padding:3px 7px;border-radius:999px;background:var(--panel);color:var(--ink);min-width:2.2em;text-align:center}
+.seg[aria-pressed="true"] .cnt{background:rgba(255,255,255,.28);color:inherit}
+
+.canvas-box{border-radius:16px;overflow:hidden;background:var(--stage);display:flex;justify-content:center;align-items:center;min-width:0}
+#sim{display:block;cursor:pointer;touch-action:manipulation}
+
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{font-family:var(--f-display);font-size:15px;line-height:1;border:2px solid var(--line);background:var(--panel-2);color:var(--ink);border-radius:12px;padding:9px 13px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:var(--panel);min-width:7.2em;justify-content:center}
+.btn[aria-pressed="false"]{color:var(--muted)}
+.btn svg{width:16px;height:16px;flex:none}
+.speed{display:flex;align-items:center;gap:8px;margin-left:auto;font-family:var(--f-display);font-size:15px;color:var(--muted)}
+.speed input{width:120px;accent-color:var(--ink)}
+.speed output{min-width:2.6em;font-variant-numeric:tabular-nums;color:var(--ink)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outline-offset:2px}
+
+/* side */
+.side{display:grid;gap:16px;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px 18px;min-width:0}
+.card h2{margin:0 0 8px;font-family:var(--f-display);font-weight:400;font-size:21px;line-height:1.25;text-wrap:balance}
+.card h3{margin:12px 0 6px;font-family:var(--f-display);font-weight:400;font-size:15px;color:var(--muted);letter-spacing:.02em}
+.card p{margin:0 0 8px}
+.explain{border-top:6px solid var(--sc,var(--ink))}
+.dir{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-display);font-size:15px;padding:5px 11px;border-radius:999px;background:var(--sc);color:var(--on-stage);margin:0 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px 3px 4px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line);font-size:15px}
+.chip canvas,.ico{width:22px;height:22px;flex:none;display:block}
+.flow3{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.flow3 li{display:grid;grid-template-columns:4.6em 1fr auto;gap:8px;align-items:center}
+.tag{font-family:var(--f-display);font-size:14px;text-align:center;padding:4px 0;border-radius:8px;background:var(--sc);color:var(--on-stage)}
+.flow3 b{font-variant-numeric:tabular-nums;font-weight:400;font-family:var(--f-display);color:var(--muted)}
+.note-small{font-size:14px;color:var(--muted);margin-top:10px!important}
+
+.scen{display:grid;gap:6px;margin-bottom:10px}
+.scen .seg{justify-content:flex-start;border-radius:12px;font-size:15px}
+.scen .seg[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
+.scen-desc{font-size:15px;color:var(--muted)}
+
+.dip{display:grid;gap:8px;margin-top:6px}
+.dip-strip{display:flex;align-items:stretch;gap:10px;padding:8px 12px 8px 46px;border-radius:10px;border:1px solid var(--line);background:var(--panel-2);position:relative}
+.dip-strip::before{content:"검사지";position:absolute;left:10px;top:50%;transform:translateY(-50%);font-family:var(--f-display);font-size:12px;color:var(--muted);writing-mode:vertical-rl}
+.dip-pad{display:grid;justify-items:center;gap:4px;font-family:var(--f-display);font-size:14px}
+.dip-pad i{display:block;width:44px;height:26px;border-radius:6px;border:1px solid rgba(0,0,0,.18);transition:background-color .6s}
+#padGlu{background:#9AD8EC}
+#padGlu.on{background:#7B6A2C}
+#padPro{background:#F0E26A}
+#padPro.on{background:#3E9C66}
+.dip-res{font-family:var(--f-display);font-size:13px;color:var(--muted)}
+.dip-res.on{color:var(--warn)}
+.dip-msg{font-size:15px;margin:0!important}
+
+.tally{width:100%;border-collapse:collapse;font-size:15px}
+.tally th{font-family:var(--f-display);font-weight:400;font-size:14px;color:var(--muted);text-align:right;padding:2px 4px 6px}
+.tally th:first-child{text-align:left}
+.tally td{padding:4px;border-top:1px solid var(--line)}
+.tally td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-display);font-size:16px;width:5em}
+.tally td.num.alert{color:var(--warn)}
+.tally .nm{display:flex;align-items:center;gap:8px}
+.tally td.num.zero{color:var(--muted);opacity:.6}
+
+/* below */
+.below{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.below{grid-template-columns:minmax(0,1fr)}}
+.head-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.head-row h2{margin:0}
+.tbl-wrap{overflow-x:auto}
+.sum{width:100%;border-collapse:collapse;min-width:420px}
+.sum th{font-family:var(--f-display);font-weight:400;font-size:15px;color:var(--muted);padding:6px 8px;text-align:center}
+.sum th:first-child{text-align:left}
+.sum td{border-top:1px solid var(--line);padding:6px 8px;text-align:center}
+.sum td:first-child{text-align:left}
+.sum .nm{display:flex;align-items:center;gap:8px;font-size:16px}
+.ans{font:inherit;font-family:var(--f-display);font-size:17px;background:none;border:0;color:var(--ink);padding:4px 10px;border-radius:8px;min-width:4.6em;cursor:default}
+.ans .v.o{color:var(--c-reab)}
+.ans .v.x{color:var(--warn)}
+.ans .v.s{color:var(--muted)}
+.masked .ans{cursor:pointer;background:var(--panel-2);border:1px dashed var(--line);position:relative}
+.masked .ans:not(.shown) .v{visibility:hidden}
+.masked .ans:not(.shown)::after{content:"?";position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)}
+.masked .ans.shown{border-style:solid}
+
+.route{display:flex;flex-wrap:wrap;align-items:center;gap:6px 4px;margin:6px 0 14px}
+.stop{display:grid;gap:2px;padding:8px 12px;border-radius:12px;background:var(--panel-2);border:1px solid var(--line);min-width:0}
+.stop b{font-family:var(--f-display);font-weight:400;font-size:17px;line-height:1.2}
+.stop small{font-size:13px;color:var(--muted);line-height:1.3}
+.stop.hl{background:var(--tube-lumen);border-color:var(--tube)}
+.arrow{color:var(--muted);font-family:var(--f-display);font-size:18px;padding:0 2px}
+.term{border-radius:14px;padding:12px 14px;background:var(--panel-2);border:1px solid var(--line);font-size:15px}
+.term b{font-family:var(--f-display);font-weight:400;font-size:16px}
+.foot{font-size:14px;color:var(--muted);margin:0;max-width:80ch}
+
+@media (max-width:560px){
+  .speed{margin-left:0;width:100%}
+  .speed input{flex:1}
+  .top svg{width:48px;height:48px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important}
+}
+</style>
+
+<div class="page">
+  <header class="top">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M38 6c11 0 20 10 20 25S50 58 38 58c-9 0-13-6-13-12 0-5 4-7 4-14s-4-9-4-14C25 11 29 6 38 6z" fill="var(--vessel)"/>
+      <path d="M24 30c-6 0-10 2-12 6" stroke="var(--tube)" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <circle cx="37" cy="27" r="2.6" fill="#2A2140"/><circle cx="48" cy="27" r="2.6" fill="#2A2140"/>
+      <path d="M38 34q5 5 10 0" stroke="#2A2140" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <circle cx="33" cy="33" r="2.6" fill="#FFB3C4"/><circle cx="52" cy="33" r="2.6" fill="#FFB3C4"/>
+    </svg>
+    <div>
+      <p class="eyebrow">중학교 과학 · 배설</p>
+      <h1>네프론 오줌 공장</h1>
+      <p class="lede">혈액이 콩팥의 네프론을 지나며 오줌이 되는 과정을 입자 친구들과 따라가 봐요. 화면 속 입자를 누르면 누구인지, 지금 무엇을 하는지 알려 줘요.</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="stage-wrap" id="stageWrap" aria-label="네프론 시뮬레이션">
+      <div class="stage-bar" role="group" aria-label="과정 선택">
+        <button class="seg all" type="button" id="st-all" data-stage="all" aria-pressed="true">전체 보기</button>
+        <button class="seg" type="button" id="st-filter" data-stage="filter" aria-pressed="false" style="--sc:var(--c-filter)">① 여과 <span class="cnt" id="cnt-filter">0</span></button>
+        <button class="seg" type="button" id="st-reab" data-stage="reab" aria-pressed="false" style="--sc:var(--c-reab)">② 재흡수 <span class="cnt" id="cnt-reab">0</span></button>
+        <button class="seg" type="button" id="st-secr" data-stage="secr" aria-pressed="false" style="--sc:var(--c-secr)">③ 분비 <span class="cnt" id="cnt-secr">0</span></button>
+      </div>
+      <div class="canvas-box" id="canvasBox">
+        <canvas id="sim" aria-describedby="simDesc"></canvas>
+        <p class="sr-only" id="simDesc">들세동맥으로 들어온 혈액이 사구체를 지나며 작은 물질이 보먼주머니로 여과되고, 세뇨관을 지나는 동안 포도당·아미노산·물·무기염류는 모세혈관으로 재흡수되며, 혈액에 남은 요소는 세뇨관으로 분비되어 집합관을 거쳐 오줌이 되는 모습을 보여 주는 애니메이션입니다.</p>
+      </div>
+      <div class="controls">
+        <button class="btn primary" type="button" id="playBtn"></button>
+        <button class="btn" type="button" id="resetBtn">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v3h3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>처음부터</button>
+        <button class="btn" type="button" id="labelBtn" aria-pressed="true">이름표</button>
+        <button class="btn" type="button" id="fsBtn" hidden>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>크게 보기</span></button>
+        <label class="speed" for="speedIn">속도 <input id="speedIn" type="range" min="0.5" max="2" step="0.25" value="1"><output id="speedOut">1×</output></label>
+      </div>
+    </section>
+
+    <aside class="side">
+      <div class="card explain" id="explain" aria-live="polite"></div>
+
+      <div class="card">
+        <h2>상황 바꿔 보기</h2>
+        <div class="scen" role="group" aria-label="콩팥 상태">
+          <button class="seg" type="button" id="sc-normal" data-scen="normal" aria-pressed="true">건강한 콩팥</button>
+          <button class="seg" type="button" id="sc-sugar" data-scen="sugar" aria-pressed="false">혈당이 아주 높을 때</button>
+          <button class="seg" type="button" id="sc-glom" data-scen="glom" aria-pressed="false">사구체가 손상됐을 때</button>
+        </div>
+        <p class="scen-desc" id="scenDesc"></p>
+        <div class="dip">
+          <div class="dip-strip">
+            <div class="dip-pad"><i id="padGlu"></i>포도당<span class="dip-res" id="resGlu">음성</span></div>
+            <div class="dip-pad"><i id="padPro"></i>단백질<span class="dip-res" id="resPro">음성</span></div>
+          </div>
+          <p class="dip-msg" id="testMsg"></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>어디로 갔을까?</h2>
+        <table class="tally">
+          <thead><tr><th>물질</th><th>오줌으로</th><th>혈액으로</th></tr></thead>
+          <tbody id="tallyBody"></tbody>
+        </table>
+        <p class="note-small">혈액으로: 콩팥 정맥을 따라 몸으로 돌아간 입자 수예요.</p>
+      </div>
+    </aside>
+  </main>
+
+  <section class="below">
+    <div class="card">
+      <div class="head-row">
+        <h2>물질별 이동 정리</h2>
+        <button class="btn" type="button" id="maskBtn" aria-pressed="false">정답 가리기</button>
+      </div>
+      <div class="tbl-wrap">
+        <table class="sum" id="sumTable">
+          <thead><tr><th>물질</th><th>여과</th><th>재흡수</th><th>분비</th></tr></thead>
+          <tbody id="sumBody"></tbody>
+        </table>
+      </div>
+      <p class="note-small">정답을 가린 뒤 칸을 하나씩 눌러 확인해 보세요.</p>
+    </div>
+
+    <div class="card">
+      <h2>오줌이 나가는 길</h2>
+      <div class="route">
+        <div class="stop hl"><b>콩팥</b><small>네프론에서 생성</small></div><span class="arrow">→</span>
+        <div class="stop"><b>콩팥 깔때기</b><small>모이는 곳</small></div><span class="arrow">→</span>
+        <div class="stop"><b>오줌관</b><small>방광으로 이동</small></div><span class="arrow">→</span>
+        <div class="stop"><b>방광</b><small>모아 두는 곳</small></div><span class="arrow">→</span>
+        <div class="stop"><b>요도</b><small>몸 밖으로</small></div>
+      </div>
+      <div class="term"><b>네프론</b> = 사구체 + 보먼주머니 + 세뇨관<br>오줌을 만드는 단위로, 콩팥 하나에 약 100만 개가 있어요.</div>
+    </div>
+  </section>
+
+  <p class="foot">실제 콩팥에서는 여과된 물의 약 99%가 다시 흡수돼요. 화면에서는 오줌이 잘 보이도록 물이 더 많이 남게 비율을 바꿨고, 입자의 크기도 실제 크기 비율과 다릅니다.</p>
+</div>
+
+<script>
+(function(){
+'use strict';
+const canvas=document.getElementById('sim');
+const ctx=canvas.getContext('2d');
+const box=document.getElementById('canvasBox');
+const wrap=document.getElementById('stageWrap');
+const FONT='Jua, "Gowun Dodum", system-ui, sans-serif';
+const DEG=Math.PI/180;
+const FACE='#2A2140';
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const TYPES={
+  rbc:{name:'적혈구',r:8.5,color:'#F0506E',inner:'#FF9EB1'},
+  protein:{name:'단백질',r:10,color:'#9C6BE3'},
+  glucose:{name:'포도당',r:7.2,color:'#FFC83A'},
+  amino:{name:'아미노산',r:6.6,color:'#4FC879'},
+  water:{name:'물',r:6.2,color:'#4BB0F5'},
+  salt:{name:'무기염류',r:5.4,color:'#FFFFFF'},
+  urea:{name:'요소',r:7,color:'#B08A55'}
+};
+const ORDER=['rbc','protein','glucose','amino','water','salt','urea'];
+
+const BASE_FILTER={rbc:0,protein:0,glucose:.8,amino:.8,water:.78,salt:.75,urea:.5};
+const BASE_REAB={glucose:1,amino:1,water:.58,salt:.62};
+const SCEN={
+  normal:{mix:{rbc:19,protein:8,glucose:12,amino:9,water:36,salt:11,urea:11},filter:BASE_FILTER,reab:BASE_REAB,
+    desc:'건강한 사람의 콩팥이에요. 오줌 검사지 색이 변하지 않아요.'},
+  sugar:{mix:{rbc:17,protein:7,glucose:28,amino:8,water:26,salt:9,urea:10},filter:BASE_FILTER,
+    reab:{glucose:.38,amino:1,water:.58,salt:.62},
+    desc:'혈액 속 포도당이 아주 많아요. 세뇨관이 재흡수할 수 있는 양에는 한계가 있어요.'},
+  glom:{mix:{rbc:19,protein:8,glucose:12,amino:9,water:36,salt:11,urea:11},
+    filter:Object.assign({},BASE_FILTER,{rbc:.14,protein:.5}),reab:BASE_REAB,
+    desc:'사구체의 걸러 내는 벽에 큰 틈이 생겼어요. 크기가 큰 물질은 어떻게 될까요?'}
+};
+
+/* 두 가지 배치: 넓은 화면(가로), 좁은 화면(세로) */
+const LAYOUTS={
+  land:{W:1000,H:600,C:[190,190],a0:215,a1:505,font:15,
+    aff:[[-24,58],[45,80],[100,115]],
+    eff:[[115,240],[105,290],[160,318],[250,310],[310,262],[360,238],[410,236],[445,240],[442,282],[442,380],[442,465],[452,530],[540,565],[628,530],[638,465],[638,380],[638,290],[655,252],[700,243],[745,240],[775,270],[778,330],[778,450],[778,560],[778,660]],
+    tube:[[253,190],[272,190],[300,170],[340,198],[380,168],[420,196],[458,192],[480,228],[480,300],[480,400],[480,460],[490,505],[540,525],[590,505],[600,460],[600,400],[600,300],[600,235],[615,200],[645,182],[685,205],[725,180],[765,205],[805,182],[845,200],[872,232],[880,280],[880,400],[880,470],[880,522]],
+    cup:[880,548],
+    labels:[
+      {t:'들세동맥',x:16,y:36,a:'left'},{t:'날세동맥',x:16,y:352,a:'left'},
+      {t:'보먼주머니',x:190,y:94},{t:'사구체',x:190,y:190},{t:'세뇨관',x:360,y:132},
+      {t:'모세혈관',x:386,y:330},{t:'집합관',x:938,y:360},{t:'콩팥 정맥으로 ↓',x:700,y:575}
+    ]},
+  port:{W:620,H:900,C:[130,190],a0:145,a1:-145,font:19,
+    aff:[[-20,330],[20,300],[55,250]],
+    eff:[[45,130],[60,85],[130,70],[205,82],[242,137],[274,165],[306,143],[350,160],[376,210],[376,300],[376,500],[376,650],[382,676],[398,683],[414,676],[420,650],[420,500],[420,300],[420,220],[440,170],[470,163],[498,150],[528,172],[548,145],[550,90],[550,20],[550,-50]],
+    tube:[[193,190],[212,192],[242,176],[274,204],[306,182],[332,205],[338,245],[338,420],[338,600],[338,655],[348,700],[398,720],[448,700],[458,655],[458,480],[458,300],[458,240],[470,205],[498,190],[528,212],[552,196],[570,225],[572,280],[572,600],[572,790],[572,812]],
+    cup:[572,840],
+    labels:[
+      {t:'들세동맥',x:12,y:372,a:'left'},{t:'날세동맥',x:95,y:36},
+      {t:'보먼주머니',x:130,y:298},{t:'사구체',x:130,y:190},{t:'세뇨관',x:262,y:262},
+      {t:'모세혈관',x:398,y:440},{t:'집합관',x:515,y:520},{t:'콩팥 정맥으로 ↑',x:465,y:28}
+    ]}
+};
+
+/* ---------- 기하 ---------- */
+function catmull(pts,seg){
+  seg=seg||12; const out=[]; const n=pts.length;
+  for(let i=0;i<n-1;i++){
+    const p0=pts[i>0?i-1:0],p1=pts[i],p2=pts[i+1],p3=pts[i+2<n?i+2:n-1];
+    for(let k=0;k<seg;k++){
+      const t=k/seg,t2=t*t,t3=t2*t;
+      out.push([
+        0.5*(2*p1[0]+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
+        0.5*(2*p1[1]+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)
+      ]);
+    }
+  }
+  out.push([pts[n-1][0],pts[n-1][1]]);
+  return out;
+}
+function polyLen(raw){let s=0;for(let i=1;i<raw.length;i++)s+=Math.hypot(raw[i][0]-raw[i-1][0],raw[i][1]-raw[i-1][1]);return s;}
+function makePath(raw){
+  const n0=raw.length; const cum=new Float64Array(n0);
+  for(let i=1;i<n0;i++)cum[i]=cum[i-1]+Math.hypot(raw[i][0]-raw[i-1][0],raw[i][1]-raw[i-1][1]);
+  const total=cum[n0-1],step=2,n=Math.max(2,Math.floor(total/step)+1);
+  const xs=new Float32Array(n),ys=new Float32Array(n); let j=0;
+  for(let i=0;i<n;i++){
+    const s=i*step; while(j<n0-2&&cum[j+1]<s)j++;
+    const seg=cum[j+1]-cum[j]; const t=seg>0?Math.min(1,(s-cum[j])/seg):0;
+    xs[i]=raw[j][0]+(raw[j+1][0]-raw[j][0])*t; ys[i]=raw[j][1]+(raw[j+1][1]-raw[j][1])*t;
+  }
+  return {xs:xs,ys:ys,n:n,step:step,len:(n-1)*step};
+}
+function pointAt(P,s){
+  if(s<0)s=0; if(s>P.len)s=P.len;
+  let i=Math.floor(s/P.step); if(i>P.n-2)i=P.n-2;
+  const t=(s-i*P.step)/P.step;
+  const x0=P.xs[i],y0=P.ys[i],x1=P.xs[i+1],y1=P.ys[i+1];
+  const dx=x1-x0,dy=y1-y0,l=Math.hypot(dx,dy)||1;
+  return {x:x0+dx*t,y:y0+dy*t,nx:-dy/l,ny:dx/l};
+}
+function toPath2D(P,i0,i1){
+  i0=i0||0; i1=(i1==null)?P.n-1:i1;
+  const p=new Path2D(); p.moveTo(P.xs[i0],P.ys[i0]);
+  for(let i=i0+1;i<=i1;i++)p.lineTo(P.xs[i],P.ys[i]);
+  return p;
+}
+
+let L=null,layoutKey=null,BLOOD=null,TUBE=null,glomS0=0,glomS1=0;
+let tubeNear,tubeDist,bloodNear,bloodDist,TZ,BZ;
+const P2D={}; let ARROWS=[];
+const ZONE=52;
+
+function glomR(a){return 28+14*Math.sin(4*a);}
+function buildLayout(key){
+  layoutKey=key; L=LAYOUTS[key]; const C=L.C;
+  const pt=function(deg){const a=deg*DEG,r=glomR(a);return [C[0]+r*Math.cos(a),C[1]+r*Math.sin(a)];};
+  const G0=pt(L.a0),G1=pt(L.a1);
+  const affRaw=catmull(L.aff.concat([G0]));
+  const glomRaw=[]; for(let k=0;k<=140;k++)glomRaw.push(pt(L.a0+(L.a1-L.a0)*k/140));
+  const effRaw=catmull([G1].concat(L.eff));
+  glomS0=polyLen(affRaw); glomS1=glomS0+polyLen(glomRaw);
+  BLOOD=makePath(affRaw.concat(glomRaw.slice(1),effRaw.slice(1)));
+  TUBE=makePath(catmull(L.tube));
+
+  /* 세뇨관과 모세혈관 사이의 가장 가까운 지점 찾기 */
+  const jMin=Math.ceil((glomS1+24)/BLOOD.step);
+  tubeNear=new Int32Array(TUBE.n).fill(-1); tubeDist=new Float32Array(TUBE.n).fill(1e12);
+  bloodNear=new Int32Array(BLOOD.n).fill(-1); bloodDist=new Float32Array(BLOOD.n).fill(1e12);
+  for(let i=0;i<TUBE.n;i++){
+    const tx=TUBE.xs[i],ty=TUBE.ys[i];
+    for(let j=jMin;j<BLOOD.n;j++){
+      const dx=BLOOD.xs[j]-tx,dy=BLOOD.ys[j]-ty,d=dx*dx+dy*dy;
+      if(d<tubeDist[i]){tubeDist[i]=d;tubeNear[i]=j;}
+      if(d<bloodDist[j]){bloodDist[j]=d;bloodNear[j]=i;}
+    }
+  }
+  for(let i=0;i<TUBE.n;i++)tubeDist[i]=Math.sqrt(tubeDist[i]);
+  for(let j=0;j<BLOOD.n;j++)bloodDist[j]=Math.sqrt(bloodDist[j]);
+  let i0=-1,i1=-1; for(let i=0;i<TUBE.n;i++){if(tubeDist[i]<ZONE){if(i0<0)i0=i;i1=i;}}
+  let j0=-1,j1=-1; for(let j=jMin;j<BLOOD.n;j++){if(bloodDist[j]<ZONE){if(j0<0)j0=j;j1=j;}}
+  TZ={i0:i0,i1:i1,s0:i0*TUBE.step,s1:i1*TUBE.step};
+  BZ={j0:j0,j1:j1,s0:j0*BLOOD.step,s1:j1*BLOOD.step};
+
+  P2D.blood=toPath2D(BLOOD); P2D.tube=toPath2D(TUBE);
+  P2D.tubeZone=toPath2D(TUBE,i0,i1);
+  const f1=new Path2D(),f2=new Path2D();
+  for(let k=0;k<=200;k++){const a=k/200*Math.PI*2,r=glomR(a),x=C[0]+r*Math.cos(a),y=C[1]+r*Math.sin(a);k?f1.lineTo(x,y):f1.moveTo(x,y);}
+  for(let k=0;k<=200;k++){const a=k/200*Math.PI*2,r=17+8*Math.sin(3*a+0.8),x=C[0]+r*Math.cos(a),y=C[1]+r*Math.sin(a);k?f2.lineTo(x,y):f2.moveTo(x,y);}
+  P2D.flower=f1; P2D.flower2=f2;
+
+  ARROWS=[];
+  const N=7;
+  for(let k=0;k<N;k++){
+    const c=Math.round(i0+(k+0.5)/N*(i1-i0)); let best=c;
+    for(let i=Math.max(i0,c-18);i<=Math.min(i1,c+18);i++){if(tubeDist[i]<tubeDist[best])best=i;}
+    if(tubeDist[best]<ZONE){const j=tubeNear[best];ARROWS.push({tx:TUBE.xs[best],ty:TUBE.ys[best],bx:BLOOD.xs[j],by:BLOOD.ys[j]});}
+  }
+}
+
+/* ---------- 상태 ---------- */
+let parts=[],bubbles=[],splashes=[];
+let simT=0,spawnAcc=0,running=!reduceMotion,speed=1,stage='all',scenario='normal',showLabels=true;
+let urine={},back={},counts={filter:0,reab:0,secr:0},cupCount=0,cupLevel=0;
+const CUP_CAP=30,SPAWN=0.24,MAXP=320;
+const lastBubble={};
+let nowMs=performance.now(),silent=false;
+let scale=1,dpr=1,lastCssW=0,lastCssH=0;
+
+function resetTallies(){ORDER.forEach(function(t){urine[t]=0;back[t]=0;});counts={filter:0,reab:0,secr:0};cupCount=0;cupLevel=0;}
+function clearSim(){parts=[];bubbles=[];splashes=[];spawnAcc=0;resetTallies();}
+
+function pickType(){
+  const mix=SCEN[scenario].mix; let tot=0; for(const k in mix)tot+=mix[k];
+  let r=Math.random()*tot; for(const k in mix){r-=mix[k]; if(r<=0)return k;} return 'water';
+}
+function spawn(){
+  const sc=SCEN[scenario]; const type=pickType();
+  const p={type:type,path:BLOOD,s:0,v:0.85+Math.random()*0.3,lat:Math.random()*2-1,phase:Math.random()*10,
+    mode:'flow',filterAt:null,secreteAt:null,reabAt:null,hop:null,x:0,y:0,picked:0,saidBig:false};
+  if(Math.random()<(sc.filter[type]||0)) p.filterAt=glomS0+(0.12+Math.random()*0.76)*(glomS1-glomS0);
+  else if(type==='urea'&&Math.random()<0.9) p.secreteAt=BZ.s0+Math.random()*(BZ.s1-BZ.s0)*0.92;
+  placeFlow(p); parts.push(p);
+}
+function halfFor(p){
+  if(p.path===BLOOD)return (p.s>glomS0&&p.s<glomS1)?8:9.5;
+  if(p.path===TUBE)return 12;
+  return 6;
+}
+function placeFlow(p){
+  const P=pointAt(p.path,p.s); const off=p.lat*Math.max(0,halfFor(p)-TYPES[p.type].r*0.95);
+  p.x=P.x+P.nx*off; p.y=P.y+P.ny*off;
+}
+function speedFor(p){
+  if(p.path===BLOOD)return (p.s>glomS0&&p.s<glomS1)?55:115;
+  if(p.path===TUBE)return 80;
+  return 55;
+}
+function decideTube(p){
+  const pr=SCEN[scenario].reab[p.type]||0;
+  if(Math.random()<pr){
+    const early=(p.type==='glucose'||p.type==='amino');
+    const span=(TZ.s1-TZ.s0)*(early?0.32:0.98);
+    p.reabAt=TZ.s0+Math.random()*span;
+  }
+}
+function startHop(p,x1,y1,path,s,kind){
+  p.mode='hop'; p.hop={x0:p.x,y0:p.y,x1:x1,y1:y1,t:0,dur:0.55,path:path,s:s,kind:kind};
+}
+function doFilter(p){
+  const C=L.C,Rs=63; let a=Math.atan2(p.y-C[1],p.x-C[0]); if(a<0)a+=Math.PI*2;
+  const target=a<Math.PI?0:Math.PI*2; const pts=[];
+  const N=Math.max(4,Math.ceil(Math.abs(target-a)*Rs/4));
+  for(let k=0;k<=N;k++){const aa=a+(target-a)*k/N;pts.push([C[0]+Rs*Math.cos(aa),C[1]+Rs*Math.sin(aa)]);}
+  const arc=makePath(pts);
+  startHop(p,pts[0][0],pts[0][1],arc,0,'filter');
+  p.filterAt=null; counts.filter++;
+  addBubble('여과!','filter',pts[0][0],pts[0][1]-14);
+}
+function doReab(p){
+  const i=Math.min(TUBE.n-1,Math.round(p.s/TUBE.step));
+  if(tubeDist[i]>ZONE+6){p.reabAt+=12; if(p.reabAt>TZ.s1)p.reabAt=null; return false;}
+  const j=tubeNear[i]; startHop(p,BLOOD.xs[j],BLOOD.ys[j],BLOOD,j*BLOOD.step,'reab');
+  p.reabAt=null; counts.reab++;
+  addBubble('재흡수!','reab',(p.x+BLOOD.xs[j])/2,Math.min(p.y,BLOOD.ys[j])-12);
+  return true;
+}
+function doSecrete(p){
+  const j=Math.min(BLOOD.n-1,Math.round(p.s/BLOOD.step));
+  if(bloodDist[j]>ZONE+6||bloodNear[j]<0){p.secreteAt+=12; if(p.secreteAt>BZ.s1)p.secreteAt=null; return false;}
+  const i=bloodNear[j]; startHop(p,TUBE.xs[i],TUBE.ys[i],TUBE,i*TUBE.step,'secr');
+  p.secreteAt=null; counts.secr++;
+  addBubble('분비!','secr',(p.x+TUBE.xs[i])/2,Math.min(p.y,TUBE.ys[i])-12);
+  return true;
+}
+function easeIO(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+
+function update(dt){
+  simT+=dt; spawnAcc+=dt;
+  while(spawnAcc>=SPAWN){spawnAcc-=SPAWN; if(parts.length<MAXP)spawn();}
+  const mid=(glomS0+glomS1)/2;
+  for(let k=0;k<parts.length;k++){
+    const p=parts[k];
+    if(p.mode==='hop'){
+      const h=p.hop; h.t+=dt/h.dur;
+      if(h.t>=1){p.mode='flow';p.path=h.path;p.s=h.s;p.hop=null;placeFlow(p);}
+      else{
+        const t=easeIO(h.t),bx=-(h.y1-h.y0),by=(h.x1-h.x0),bl=Math.hypot(bx,by)||1,bump=Math.sin(Math.PI*t)*7;
+        p.x=h.x0+(h.x1-h.x0)*t+bx/bl*bump; p.y=h.y0+(h.y1-h.y0)*t+by/bl*bump;
+      }
+      continue;
+    }
+    const prev=p.s; p.s+=speedFor(p)*p.v*dt;
+    if(p.path===BLOOD){
+      if(p.filterAt!=null&&p.s>=p.filterAt){p.s=p.filterAt;placeFlow(p);doFilter(p);continue;}
+      if(p.secreteAt!=null&&p.s>=p.secreteAt){p.s=p.secreteAt;placeFlow(p);if(doSecrete(p))continue;}
+      if((p.type==='rbc'||p.type==='protein')&&prev<mid&&p.s>=mid){
+        if(scenario==='normal'&&(stage==='all'||stage==='filter'))addBubble(p.type==='rbc'?'난 커서 못 나가!':'너무 커서 못 지나가요','block',p.x,p.y-16);
+      }
+      if(p.s>=BLOOD.len){p.dead=true;back[p.type]++;continue;}
+    }else if(p.path===TUBE){
+      if(p.reabAt!=null&&p.s>=p.reabAt){p.s=p.reabAt;placeFlow(p);if(doReab(p))continue;}
+      if(p.s>=TUBE.len){
+        p.dead=true; urine[p.type]++; cupCount++;
+        if(!silent)splashes.push({x:L.cup[0],y:L.cup[1]-26,age:0});
+        if(cupCount>=CUP_CAP){cupCount=0;addBubble('방광으로 보내요!','cup',L.cup[0]-20,L.cup[1]-40);}
+        continue;
+      }
+    }else{
+      if(p.s>=p.path.len){p.path=TUBE;p.s=0;decideTube(p);}
+    }
+    placeFlow(p);
+  }
+  parts=parts.filter(function(p){return !p.dead;});
+}
+function prewarm(sec){silent=true;const st=1/30;for(let t=0;t<sec;t+=st)update(st);silent=false;bubbles=[];splashes=[];cupLevel=cupCount/CUP_CAP;}
+
+/* ---------- 말풍선 ---------- */
+function addBubble(text,kind,x,y,force){
+  if(silent)return;
+  if(!force){
+    if(kind==='filter'||kind==='reab'||kind==='secr'){
+      if(stage!=='all'&&stage!==kind)return;
+      const gap=stage==='all'?1100:420;
+      if(nowMs-(lastBubble[kind]||0)<gap)return;
+    }else if(kind==='block'){
+      if(nowMs-(lastBubble.block||0)<2800)return;
+    }
+    lastBubble[kind]=nowMs;
+  }
+  const fs=L.font+1; ctx.save(); ctx.font=fs+'px '+FONT; const w=ctx.measureText(text).width+fs*1.2; ctx.restore();
+  const half=w/2+4; x=Math.max(half,Math.min(L.W-half,x)); y=Math.max(fs*2+4,y);
+  bubbles.push({text:text,kind:kind,x:x,y:y,w:w,age:0,life:kind==='info'?2.6:1.5});
+}
+
+/* ---------- 색 ---------- */
+const TOK=['stage','panel','panel-2','ink','muted','line','vessel','vessel-lumen','tube','tube-lumen','c-filter','c-reab','c-secr','on-stage','warn'];
+let col={};
+function readTheme(){const cs=getComputedStyle(document.documentElement);TOK.forEach(function(k){col[k]=cs.getPropertyValue('--'+k).trim();});}
+function stageColor(k){return k==='filter'?col['c-filter']:k==='reab'?col['c-reab']:k==='secr'?col['c-secr']:col.ink;}
+
+/* ---------- 입자 그리기 ---------- */
+function roundRect(c,x,y,w,h,r){c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function drawBody(c,type,r,t){
+  const T=TYPES[type]; c.lineWidth=Math.max(1,r*0.17); c.strokeStyle=FACE; c.fillStyle=T.color; c.lineJoin='round';
+  c.beginPath();
+  if(type==='rbc'){
+    c.ellipse(0,0,r,r*0.86,0,0,Math.PI*2);c.fill();c.stroke();
+    c.fillStyle=T.inner;c.beginPath();c.ellipse(0,r*0.1,r*0.56,r*0.42,0,0,Math.PI*2);c.fill();
+  }else if(type==='protein'){
+    const cs=[[-r*0.45,r*0.22,r*0.56],[r*0.45,r*0.22,r*0.56],[0,-r*0.3,r*0.6]];
+    c.lineWidth*=2; cs.forEach(function(k){c.beginPath();c.arc(k[0],k[1],k[2],0,Math.PI*2);c.stroke();});
+    cs.forEach(function(k){c.beginPath();c.arc(k[0],k[1],k[2],0,Math.PI*2);c.fill();});
+  }else if(type==='glucose'){
+    for(let k=0;k<6;k++){const a=k*Math.PI/3+Math.PI/6;const x=Math.cos(a)*r*1.05,y=Math.sin(a)*r*1.05;k?c.lineTo(x,y):c.moveTo(x,y);}
+    c.closePath();c.fill();c.stroke();
+  }else if(type==='amino'){
+    roundRect(c,-r*0.88,-r*0.88,r*1.76,r*1.76,r*0.42);c.fill();c.stroke();
+  }else if(type==='water'){
+    c.moveTo(0,-r*1.3);c.bezierCurveTo(r*0.55,-r*0.6,r*1.0,-r*0.1,r*0.95,r*0.25);
+    c.arc(0,r*0.25,r*0.95,0,Math.PI);c.bezierCurveTo(-r*1.0,-r*0.1,-r*0.55,-r*0.6,0,-r*1.3);c.closePath();c.fill();c.stroke();
+  }else if(type==='salt'){
+    roundRect(c,-r*0.92,-r*0.92,r*1.84,r*1.84,r*0.28);c.fill();c.stroke();
+  }else{
+    for(let k=0;k<=12;k++){const a=k/12*Math.PI*2;const rr=r*(1+0.09*Math.sin(5*a+t*2));const x=Math.cos(a)*rr,y=Math.sin(a)*rr;k?c.lineTo(x,y):c.moveTo(x,y);}
+    c.closePath();c.fill();c.stroke();
+  }
+}
+function drawFace(c,type,r,closed){
+  const ex=r*0.34,ey=type==='water'?r*0.12:-r*0.1,er=Math.max(0.8,r*0.14);
+  c.fillStyle=FACE;c.strokeStyle=FACE;c.lineWidth=Math.max(0.9,r*0.13);c.lineCap='round';
+  if(closed){c.beginPath();c.moveTo(-ex-er,ey);c.lineTo(-ex+er,ey);c.moveTo(ex-er,ey);c.lineTo(ex+er,ey);c.stroke();}
+  else{c.beginPath();c.arc(-ex,ey,er,0,Math.PI*2);c.arc(ex,ey,er,0,Math.PI*2);c.fill();}
+  c.beginPath();
+  if(type==='urea'){
+    c.arc(0,ey+r*0.55,r*0.24,1.15*Math.PI,1.85*Math.PI);c.stroke();
+    c.beginPath();c.moveTo(-ex-r*0.2,ey-r*0.34);c.lineTo(-ex+r*0.16,ey-r*0.2);c.moveTo(ex+r*0.2,ey-r*0.34);c.lineTo(ex-r*0.16,ey-r*0.2);c.stroke();
+  }else{
+    c.arc(0,ey+r*0.1,r*0.26,0.15*Math.PI,0.85*Math.PI);c.stroke();
+    if(type!=='rbc'&&type!=='protein'){c.fillStyle='rgba(255,110,145,.55)';c.beginPath();c.arc(-r*0.58,ey+r*0.3,r*0.15,0,Math.PI*2);c.arc(r*0.58,ey+r*0.3,r*0.15,0,Math.PI*2);c.fill();}
+  }
+}
+function drawParticle(c,type,x,y,r,t,phase,still){
+  c.save();c.translate(x,y);
+  if(!still){const w=Math.sin(t*6+phase)*0.05;c.rotate(Math.sin(t*3+phase)*0.18);c.scale(1+w,1-w);}
+  drawBody(c,type,r,t);
+  const closed=!still&&((t*0.8+phase)%3.6)<0.13;
+  drawFace(c,type,r,closed);
+  c.restore();
+}
+function drawIcon(cv,type){
+  const size=cv.clientWidth||22,d=window.devicePixelRatio||1;
+  cv.width=Math.round(size*d);cv.height=Math.round(size*d);
+  const c=cv.getContext('2d');c.setTransform(d,0,0,d,0,0);c.clearRect(0,0,size,size);
+  const r=size*(type==='protein'?0.38:type==='salt'?0.32:0.36);
+  drawParticle(c,type,size/2,size/2+(type==='water'?size*0.06:0),r,0,0,true);
+}
+function hydrateIcons(root){root.querySelectorAll('canvas[data-icon]').forEach(function(cv){drawIcon(cv,cv.getAttribute('data-icon'));});}
+
+/* ---------- 장면 그리기 ---------- */
+function pill(text,x,y,align,fs){
+  ctx.font=fs+'px '+FONT; const tw=ctx.measureText(text).width,w=tw+fs*1.1,h=fs*1.65;
+  let x0=align==='left'?x:x-w/2;
+  ctx.globalAlpha=0.94;ctx.fillStyle=col.panel;ctx.beginPath();roundRect(ctx,x0,y-h/2,w,h,h/2);ctx.fill();ctx.globalAlpha=1;
+  ctx.lineWidth=1.5;ctx.strokeStyle=col.line;ctx.stroke();
+  ctx.fillStyle=col.ink;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,x0+w/2,y+1);
+}
+function drawArrow(x0,y0,x1,y1,color,t){
+  const dx=x1-x0,dy=y1-y0,l=Math.hypot(dx,dy)||1,ux=dx/l,uy=dy/l;
+  const ax=x0+ux*5,ay=y0+uy*5,bx=x1-ux*4,by=y1-uy*4;
+  ctx.save();ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=3.2;ctx.lineCap='round';
+  ctx.setLineDash([5,5]);ctx.lineDashOffset=-t*24;
+  ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx-ux*6,by-uy*6);ctx.stroke();ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx-ux*9-uy*6,by-uy*9+ux*6);ctx.lineTo(bx-ux*9+uy*6,by-uy*9-ux*6);ctx.closePath();ctx.fill();
+  ctx.restore();
+}
+function drawZoneUnder(t){
+  if(stage==='all')return;
+  const c=stageColor(stage),C=L.C;
+  ctx.save();ctx.globalAlpha=0.11+0.04*Math.sin(t*3);
+  if(stage==='filter'){ctx.fillStyle=c;ctx.beginPath();ctx.arc(C[0],C[1],96,0,Math.PI*2);ctx.fill();}
+  else{ctx.strokeStyle=c;ctx.lineWidth=92;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke(P2D.tubeZone);}
+  ctx.restore();
+}
+function drawZoneOver(t){
+  if(stage==='all')return;
+  const c=stageColor(stage),C=L.C;
+  if(stage==='filter'){
+    ctx.save();ctx.strokeStyle=c;ctx.lineWidth=2.5;ctx.setLineDash([7,6]);ctx.lineDashOffset=-t*18;
+    ctx.beginPath();ctx.arc(C[0],C[1],90,0,Math.PI*2);ctx.stroke();ctx.restore();
+    [250,290,330,30,70,110].forEach(function(dg){const a=dg*DEG;drawArrow(C[0]+46*Math.cos(a),C[1]+46*Math.sin(a),C[0]+70*Math.cos(a),C[1]+70*Math.sin(a),c,t);});
+  }else{
+    ARROWS.forEach(function(A){
+      if(stage==='reab')drawArrow(A.tx,A.ty,A.bx,A.by,c,t);else drawArrow(A.bx,A.by,A.tx,A.ty,c,t);
+    });
+  }
+}
+function drawStructures(){
+  const C=L.C;
+  ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.strokeStyle=col.tube;ctx.lineWidth=34;ctx.stroke(P2D.tube);
+  ctx.strokeStyle=col['tube-lumen'];ctx.lineWidth=25;ctx.stroke(P2D.tube);
+  ctx.fillStyle=col['tube-lumen'];ctx.beginPath();ctx.arc(C[0],C[1],72,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle=col.tube;ctx.lineWidth=8;ctx.lineCap='butt';
+  ctx.beginPath();ctx.arc(C[0],C[1],76,0.27,130*DEG);ctx.stroke();
+  ctx.beginPath();ctx.arc(C[0],C[1],76,230*DEG,Math.PI*2-0.27);ctx.stroke();
+  ctx.lineCap='round';
+  ctx.strokeStyle=col.vessel;ctx.lineWidth=28;ctx.stroke(P2D.blood);
+  ctx.lineWidth=24;ctx.stroke(P2D.flower);ctx.stroke(P2D.flower2);
+  ctx.strokeStyle=col['vessel-lumen'];ctx.lineWidth=16;ctx.stroke(P2D.flower2);ctx.stroke(P2D.flower);
+  ctx.lineWidth=20;ctx.stroke(P2D.blood);
+}
+function drawCup(t){
+  const cx=L.cup[0],cy=L.cup[1],top=cy-28,bot=cy+28,tw=34,bw=25;
+  const shape=new Path2D();
+  shape.moveTo(cx-tw,top);shape.lineTo(cx+tw,top);shape.lineTo(cx+bw,bot-8);
+  shape.quadraticCurveTo(cx+bw,bot,cx+bw-8,bot);shape.lineTo(cx-bw+8,bot);shape.quadraticCurveTo(cx-bw,bot,cx-bw,bot-8);shape.closePath();
+  ctx.fillStyle=col.panel;ctx.fill(shape);
+  const lv=Math.max(0.06,Math.min(1,cupLevel)),ly=bot-lv*(bot-top-6);
+  ctx.save();ctx.clip(shape);ctx.fillStyle=col.tube;ctx.globalAlpha=0.55;ctx.beginPath();ctx.moveTo(cx-tw-4,ly);
+  for(let x=-tw-4;x<=tw+4;x+=4)ctx.lineTo(cx+x,ly+Math.sin(x*0.25+t*4)*1.6);
+  ctx.lineTo(cx+tw+4,bot+2);ctx.lineTo(cx-tw-4,bot+2);ctx.closePath();ctx.fill();ctx.restore();
+  ctx.strokeStyle=col.tube;ctx.lineWidth=4;ctx.lineJoin='round';ctx.stroke(shape);
+  ctx.fillStyle=col.ink;ctx.beginPath();ctx.arc(cx-9,cy-6,2.3,0,Math.PI*2);ctx.arc(cx+9,cy-6,2.3,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle=col.ink;ctx.lineWidth=2;ctx.lineCap='round';ctx.beginPath();ctx.arc(cx,cy-3,5,0.15*Math.PI,0.85*Math.PI);ctx.stroke();
+  ctx.font=(L.font-2)+'px '+FONT;ctx.fillStyle=col.ink;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('오줌',cx,cy+14);
+}
+function drawBubble(b){
+  const a=b.age/b.life,alpha=a>0.7?1-(a-0.7)/0.3:1;
+  const k=Math.min(1,b.age/0.18),pop=reduceMotion?1:(1+2.70158*Math.pow(k-1,3)+1.70158*Math.pow(k-1,2));
+  const fs=L.font+1,h=fs*1.7,w=b.w;
+  const bg=b.kind==='info'?col.ink:b.kind==='block'||b.kind==='cup'?col.muted:stageColor(b.kind);
+  const fg=b.kind==='info'||b.kind==='block'||b.kind==='cup'?col.panel:col['on-stage'];
+  ctx.save();ctx.globalAlpha=Math.max(0,alpha);ctx.translate(b.x,b.y-(reduceMotion?0:b.age*12));ctx.scale(pop,pop);
+  ctx.fillStyle=bg;ctx.beginPath();roundRect(ctx,-w/2,-h-6,w,h,h/2);ctx.fill();
+  ctx.beginPath();ctx.moveTo(-6,-7);ctx.lineTo(6,-7);ctx.lineTo(0,1);ctx.closePath();ctx.fill();
+  ctx.fillStyle=fg;ctx.font=fs+'px '+FONT;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(b.text,0,-6-h/2+1);
+  ctx.restore();
+}
+function draw(t,dtReal){
+  ctx.setTransform(dpr*scale,0,0,dpr*scale,0,0);
+  ctx.fillStyle=col.stage;ctx.fillRect(0,0,L.W,L.H);
+  drawZoneUnder(t);
+  drawStructures();
+  cupLevel+=(cupCount/CUP_CAP-cupLevel)*Math.min(1,dtReal*4);
+  drawCup(t);
+  drawZoneOver(t);
+  for(let k=0;k<parts.length;k++){
+    const p=parts[k],r=TYPES[p.type].r;
+    if(p.mode==='hop'){
+      const h=p.hop,hl=stage==='all'||stage===h.kind;
+      ctx.save();ctx.strokeStyle=stageColor(h.kind);ctx.globalAlpha=hl?0.8:0.35;ctx.lineWidth=2;ctx.setLineDash([3,4]);
+      ctx.beginPath();ctx.moveTo(h.x0,h.y0);ctx.lineTo(p.x,p.y);ctx.stroke();ctx.restore();
+      if(hl&&stage!=='all'){ctx.save();ctx.strokeStyle=stageColor(h.kind);ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(p.x,p.y,r+5,0,Math.PI*2);ctx.stroke();ctx.restore();}
+      const sc=1+0.25*Math.sin(Math.PI*Math.min(1,h.t));
+      drawParticle(ctx,p.type,p.x,p.y,r*sc,simT,p.phase,false);
+    }else drawParticle(ctx,p.type,p.x,p.y,r,simT,p.phase,false);
+    if(p.picked&&nowMs-p.picked<2600){
+      ctx.save();ctx.strokeStyle=col.ink;ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.lineDashOffset=-t*20;
+      ctx.beginPath();ctx.arc(p.x,p.y,r+6,0,Math.PI*2);ctx.stroke();ctx.restore();
+    }
+  }
+  for(let k=splashes.length-1;k>=0;k--){
+    const s=splashes[k];s.age+=dtReal;if(s.age>0.6){splashes.splice(k,1);continue;}
+    ctx.save();ctx.globalAlpha=1-s.age/0.6;ctx.strokeStyle=col.tube;ctx.lineWidth=2;
+    ctx.beginPath();ctx.ellipse(s.x,s.y,6+s.age*30,2+s.age*8,0,0,Math.PI*2);ctx.stroke();ctx.restore();
+  }
+  if(showLabels)L.labels.forEach(function(lb){pill(lb.t,lb.x,lb.y,lb.a,L.font);});
+  for(let k=bubbles.length-1;k>=0;k--){const b=bubbles[k];b.age+=dtReal;if(b.age>b.life){bubbles.splice(k,1);continue;}drawBubble(b);}
+}
+
+/* ---------- 크기 ---------- */
+function resize(force){
+  const fs=document.fullscreenElement===wrap;
+  const bw=box.clientWidth,bh=box.clientHeight;
+  if(bw<10)return;
+  const mode=fs?((bw/Math.max(1,bh))<0.95?'port':'land'):(bw<640?'port':'land');
+  let changed=false;
+  if(mode!==layoutKey){buildLayout(mode);clearSim();prewarm(34);changed=true;}
+  const s=fs?Math.min(bw/L.W,bh/L.H):bw/L.W;
+  const cw=Math.floor(L.W*s),ch=Math.floor(L.H*s);
+  dpr=Math.min(2.5,window.devicePixelRatio||1);
+  if(!force&&!changed&&cw===lastCssW&&ch===lastCssH)return;
+  lastCssW=cw;lastCssH=ch;
+  canvas.style.width=cw+'px';canvas.style.height=ch+'px';
+  canvas.width=Math.round(cw*dpr);canvas.height=Math.round(ch*dpr);
+  scale=cw/L.W;
+}
+
+/* ---------- 화면 글 ---------- */
+function chips(types,extra){return '<div class="chips">'+types.map(function(t){return '<span class="chip"><canvas data-icon="'+t+'" aria-hidden="true"></canvas>'+TYPES[t].name+(extra&&extra[t]?' '+extra[t]:'')+'</span>';}).join('')+'</div>';}
+const EXPLAIN={
+  all:function(){return '<h2>오줌이 만들어지는 세 과정</h2><p>혈액이 <b>사구체</b>를 지나며 걸러지고, <b>세뇨관</b>을 지나는 동안 필요한 물질은 혈액으로 돌아가고 노폐물은 더해져요. 위의 단계를 하나씩 눌러 보세요.</p>'+
+    '<ul class="flow3">'+
+    '<li><span class="tag" style="--sc:var(--c-filter)">여과</span>사구체 → 보먼주머니<b id="f3-filter">0</b></li>'+
+    '<li><span class="tag" style="--sc:var(--c-reab)">재흡수</span>세뇨관 → 모세혈관<b id="f3-reab">0</b></li>'+
+    '<li><span class="tag" style="--sc:var(--c-secr)">분비</span>모세혈관 → 세뇨관<b id="f3-secr">0</b></li></ul>';},
+  filter:function(){return '<h2>① 여과</h2><p class="dir">사구체 → 보먼주머니</p><p>사구체의 높은 혈압 때문에 크기가 작은 물질이 보먼주머니로 빠져나가요.</p>'+
+    '<h3>빠져나가요</h3>'+chips(['water','glucose','amino','salt','urea'])+
+    '<h3>크기가 커서 못 나가요</h3>'+chips(['rbc','protein']);},
+  reab:function(){return '<h2>② 재흡수</h2><p class="dir">세뇨관 → 모세혈관</p><p>몸에 필요한 물질이 세뇨관을 둘러싼 모세혈관으로 다시 흡수돼요.</p>'+
+    '<h3>모두 재흡수돼요</h3>'+chips(['glucose','amino'])+
+    '<h3>대부분 재흡수돼요</h3>'+chips(['water','salt'])+
+    '<h3>거의 재흡수되지 않아요</h3>'+chips(['urea']);},
+  secr:function(){return '<h2>③ 분비</h2><p class="dir">모세혈관 → 세뇨관</p><p>여과되지 않고 혈액에 남아 있던 노폐물이 모세혈관에서 세뇨관으로 옮겨 가요. 여과보다 훨씬 적은 양이 이동해요.</p>'+
+    '<h3>분비돼요</h3>'+chips(['urea'],{urea:'같은 노폐물'});}
+};
+const explainEl=document.getElementById('explain');
+function renderExplain(){
+  explainEl.style.setProperty('--sc',stage==='all'?'var(--ink)':'var(--c-'+stage+')');
+  explainEl.innerHTML=EXPLAIN[stage]();hydrateIcons(explainEl);updateDom(true);
+}
+
+const tallyBody=document.getElementById('tallyBody');
+const cells={};
+ORDER.forEach(function(t){
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td><span class="nm"><canvas class="ico" data-icon="'+t+'" aria-hidden="true"></canvas>'+TYPES[t].name+'</span></td><td class="num"></td><td class="num"></td>';
+  tallyBody.appendChild(tr);
+  cells[t]={u:tr.children[1],b:tr.children[2]};
+});
+hydrateIcons(tallyBody);
+
+const SUM=[
+  ['rbc',['x','✕'],['s','–'],['s','–']],
+  ['protein',['x','✕'],['s','–'],['s','–']],
+  ['glucose',['o','○'],['o','모두'],['s','–']],
+  ['amino',['o','○'],['o','모두'],['s','–']],
+  ['water',['o','○'],['o','대부분'],['s','–']],
+  ['salt',['o','○'],['o','대부분'],['s','–']],
+  ['urea',['o','○'],['x','거의 안 됨'],['o','○']]
+];
+const sumBody=document.getElementById('sumBody');
+sumBody.innerHTML=SUM.map(function(r){
+  return '<tr><td><span class="nm"><canvas class="ico" data-icon="'+r[0]+'" aria-hidden="true"></canvas>'+TYPES[r[0]].name+'</span></td>'+
+    r.slice(1).map(function(c){return '<td><button class="ans" type="button" tabindex="-1"><span class="v '+c[0]+'">'+c[1]+'</span></button></td>';}).join('')+'</tr>';
+}).join('');
+hydrateIcons(sumBody);
+const sumTable=document.getElementById('sumTable'),maskBtn=document.getElementById('maskBtn');
+maskBtn.addEventListener('click',function(){
+  const on=!sumTable.classList.contains('masked');
+  sumTable.classList.toggle('masked',on);maskBtn.setAttribute('aria-pressed',String(on));
+  maskBtn.textContent=on?'정답 모두 보기':'정답 가리기';
+  sumTable.querySelectorAll('.ans').forEach(function(b){b.classList.remove('shown');b.tabIndex=on?0:-1;b.setAttribute('aria-label',on?'정답 확인':'');});
+});
+sumTable.addEventListener('click',function(e){
+  const b=e.target.closest('.ans'); if(!b||!sumTable.classList.contains('masked'))return;
+  b.classList.toggle('shown');
+});
+
+const scenDesc=document.getElementById('scenDesc'),testMsg=document.getElementById('testMsg');
+const padGlu=document.getElementById('padGlu'),padPro=document.getElementById('padPro');
+const resGlu=document.getElementById('resGlu'),resPro=document.getElementById('resPro');
+let lastDom=0;
+function updateDom(force){
+  if(!force&&nowMs-lastDom<220)return; lastDom=nowMs;
+  ['filter','reab','secr'].forEach(function(k){
+    const el=document.getElementById('cnt-'+k);if(el)el.textContent=counts[k];
+    const f=document.getElementById('f3-'+k);if(f)f.textContent=counts[k]+'번';
+  });
+  ORDER.forEach(function(t){
+    const u=urine[t],b=back[t];
+    cells[t].u.textContent=u;cells[t].b.textContent=b;
+    const bad=(t==='glucose'||t==='protein'||t==='rbc'||t==='amino')&&u>0;
+    cells[t].u.className='num'+(bad?' alert':u===0?' zero':'');
+    cells[t].b.className='num'+(b===0?' zero':'');
+  });
+  const g=urine.glucose>0,pr=urine.protein>0,rb=urine.rbc>0;
+  padGlu.classList.toggle('on',g);padPro.classList.toggle('on',pr);
+  resGlu.textContent=g?'검출':'음성';resGlu.classList.toggle('on',g);
+  resPro.textContent=pr?'검출':'음성';resPro.classList.toggle('on',pr);
+  let msg;
+  if(!g&&!pr)msg='포도당과 단백질이 나오지 않았어요. 건강한 오줌이에요.';
+  else{
+    msg='';
+    if(g)msg+='오줌에서 포도당이 나왔어요. 혈당이 너무 높으면 세뇨관이 포도당을 다 재흡수하지 못해 오줌으로 나와요. 당뇨병을 확인할 때 이 검사를 해요. ';
+    if(pr)msg+='오줌에서 단백질이 나왔어요. 사구체가 손상되면 크기가 큰 단백질도 여과돼요.'+(rb?' 적혈구도 섞여 나왔어요.':'');
+  }
+  if(testMsg.textContent!==msg.trim())testMsg.textContent=msg.trim();
+}
+
+/* ---------- 조작 ---------- */
+const playBtn=document.getElementById('playBtn');
+const ICON_PAUSE='<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/></svg>';
+const ICON_PLAY='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.6v10.8a.6.6 0 0 0 .9.5l8.6-5.4a.6.6 0 0 0 0-1L4.9 2.1a.6.6 0 0 0-.9.5z" fill="currentColor"/></svg>';
+function renderPlay(){playBtn.innerHTML=running?ICON_PAUSE+'멈추기':ICON_PLAY+'재생';}
+playBtn.addEventListener('click',function(){running=!running;renderPlay();});
+document.getElementById('resetBtn').addEventListener('click',function(){clearSim();updateDom(true);});
+const labelBtn=document.getElementById('labelBtn');
+labelBtn.addEventListener('click',function(){showLabels=!showLabels;labelBtn.setAttribute('aria-pressed',String(showLabels));});
+const speedIn=document.getElementById('speedIn'),speedOut=document.getElementById('speedOut');
+speedIn.addEventListener('input',function(){speed=parseFloat(speedIn.value);speedOut.textContent=speed+'×';});
+
+document.querySelectorAll('[data-stage]').forEach(function(b){
+  b.addEventListener('click',function(){
+    stage=b.getAttribute('data-stage');
+    document.querySelectorAll('[data-stage]').forEach(function(o){o.setAttribute('aria-pressed',String(o===b));});
+    renderExplain();
+  });
+});
+document.querySelectorAll('[data-scen]').forEach(function(b){
+  b.addEventListener('click',function(){
+    scenario=b.getAttribute('data-scen');
+    document.querySelectorAll('[data-scen]').forEach(function(o){o.setAttribute('aria-pressed',String(o===b));});
+    scenDesc.textContent=SCEN[scenario].desc;
+    clearSim();prewarm(34);updateDom(true);
+  });
+});
+
+const fsBtn=document.getElementById('fsBtn');
+if(document.fullscreenEnabled&&wrap.requestFullscreen){
+  fsBtn.hidden=false;
+  fsBtn.addEventListener('click',function(){
+    if(document.fullscreenElement){document.exitFullscreen().catch(function(){});}
+    else{wrap.requestFullscreen().catch(function(){});}
+  });
+  document.addEventListener('fullscreenchange',function(){
+    fsBtn.querySelector('span').textContent=document.fullscreenElement?'작게 보기':'크게 보기';
+    requestAnimationFrame(function(){resize(true);});
+  });
+}
+
+canvas.addEventListener('pointerdown',function(e){
+  const r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)/scale,y=(e.clientY-r.top)/scale;
+  const rad=Math.max(16,22/scale);let best=null,bd=rad*rad;
+  parts.forEach(function(p){const dx=p.x-x,dy=p.y-y,d=dx*dx+dy*dy;if(d<bd){bd=d;best=p;}});
+  if(best){best.picked=nowMs;addBubble(describe(best),'info',best.x,best.y-TYPES[best.type].r-6,true);}
+});
+function describe(p){
+  const n=TYPES[p.type].name;
+  if(p.mode==='hop')return n+' · '+({filter:'여과되는 중',reab:'재흡수되는 중',secr:'분비되는 중'})[p.hop.kind];
+  if(p.path===BLOOD){
+    if(p.filterAt!=null)return n+' · 곧 여과돼요';
+    if(p.secreteAt!=null)return n+' · 곧 세뇨관으로 분비돼요';
+    if(p.type==='rbc'||p.type==='protein')return n+' · 커서 혈관에 남아요';
+    return n+' · 혈액을 따라 흘러요';
+  }
+  if(p.path===TUBE)return n+(p.reabAt!=null?' · 곧 모세혈관으로 돌아가요':' · 오줌이 될 거예요');
+  return n+' · 보먼주머니를 지나는 중';
+}
+
+/* 테마 */
+readTheme();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',readTheme);
+new MutationObserver(readTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','class','style']});
+
+/* 시작 */
+resetTallies();
+scenDesc.textContent=SCEN.normal.desc;
+renderPlay();
+resize(true);
+renderExplain();
+new ResizeObserver(function(){resize(false);}).observe(box);
+window.addEventListener('resize',function(){resize(false);});
+
+let last=performance.now();
+function frame(now){
+  const dtReal=Math.min(0.05,(now-last)/1000);last=now;nowMs=now;
+  if(!L){resize(true);if(!L){requestAnimationFrame(frame);return;}renderExplain();}
+  if(running)update(dtReal*speed);
+  draw(now/1000,dtReal);
+  updateDom(false);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+
+<a href="index.html" style="position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:50;font-family:Jua,sans-serif;font-size:14px;text-decoration:none;color:#2b2f55;background:#fff;border:2px solid #dde2f7;border-radius:999px;padding:4px 12px;box-shadow:0 4px 12px rgba(90,100,170,.18)">⌂ 모음으로</a>
+</html>

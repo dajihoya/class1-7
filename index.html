@@ -3,39 +3,69 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>지구과학 시뮬레이션 모음</title>
+<title>과학 시뮬레이션 모음</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
 <style>
 :root{--bg1:#e8efff;--bg2:#fff1f4;--ink:#2b2f55;--muted:#6b7099;--line:#dde2f7;--pink:#ff6f91;
+  --life:#1f9d63;--life-soft:#e3f7ea;--earth:#3b6fe0;--earth-soft:#e6eeff;
   --display:"Jua","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;--body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;color-scheme:light}
 *{box-sizing:border-box}
 html,body{background-color:var(--bg1);color:var(--ink);margin:0}
 body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cg opacity='.6'%3E%3Cpath d='M26 18l2.6 6.4L35 27l-6.4 2.6L26 36l-2.6-6.4L17 27l6.4-2.6z' fill='%23ffd166'/%3E%3Cpath d='M132 70l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z' fill='%23ff9ebb'/%3E%3Cpath d='M78 136l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z' fill='%239bb8ff'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(180deg,var(--bg1),var(--bg2));
   min-height:100vh;font-family:var(--body);font-size:16px;line-height:1.6;padding:32px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
-.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
 header{display:flex;gap:14px;align-items:center}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,46px);margin:0;line-height:1.15}
+.mascots{display:flex;flex:none}
+.mascots svg{width:56px;height:56px}
+.mascots svg+svg{margin-left:-14px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,46px);margin:0;line-height:1.15;word-break:keep-all}
 header p{margin:2px 0 0;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;max-width:760px}
-a.card{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(90,100,170,.10);transition:transform .15s,box-shadow .15s}
-a.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(90,100,170,.18)}
-a.card:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-.card h2{font-family:var(--display);font-weight:400;font-size:24px;margin:0}
-.card p{margin:0;color:var(--muted);font-size:15px}
-.go{margin-top:auto;align-self:flex-start;font-family:var(--display);color:#fff;background:var(--pink);border-radius:999px;padding:4px 14px}
-.ico{width:56px;height:56px}
-@media (prefers-reduced-motion:reduce){a.card{transition:none}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px;max-width:820px}
+a.subject{--c:var(--life);--soft:var(--life-soft);display:flex;flex-direction:column;gap:12px;text-decoration:none;color:var(--ink);background:#fff;border:2px solid var(--line);border-top:8px solid var(--c);border-radius:24px;padding:22px;box-shadow:0 8px 24px rgba(90,100,170,.10);transition:transform .15s,box-shadow .15s,border-color .15s}
+a.subject.earth{--c:var(--earth);--soft:var(--earth-soft)}
+a.subject:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(90,100,170,.18);border-color:var(--c)}
+a.subject:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.subject-head{display:flex;align-items:center;gap:12px}
+.badge{width:52px;height:52px;border-radius:16px;background:var(--soft);display:grid;place-items:center;flex:none}
+.badge svg{width:36px;height:36px}
+.subject h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;line-height:1.1}
+.count{font-size:14px;color:var(--muted)}
+.subject p{margin:0;color:var(--muted);font-size:15px}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.list li{background:var(--soft);border-radius:999px;padding:3px 12px;font-size:14px}
+.go{margin-top:auto;align-self:flex-start;font-family:var(--display);color:#fff;background:var(--c);border-radius:999px;padding:5px 16px}
+@media (prefers-reduced-motion:reduce){a.subject{transition:none}}
 </style>
+</head>
+<body>
 <div class="wrap">
   <header>
-    <svg class="ico" viewBox="0 0 58 58" aria-hidden="true"><path d="M29 5l6.6 14.2 15.4 1.9-11.4 10.6 3 15.3L29 39.4 15.4 47l3-15.3L7 21.1l15.4-1.9z" fill="#ffd166" stroke="#2b2f55" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="26" r="2" fill="#2b2f55"/><circle cx="34" cy="26" r="2" fill="#2b2f55"/><path d="M24.5 31.5q4.5 4 9 0" fill="none" stroke="#2b2f55" stroke-width="2" stroke-linecap="round"/></svg>
-    <div><h1>지구과학 시뮬레이션 모음</h1><p>보고 싶은 자료를 골라 눌러 보세요.</p></div>
+    <div class="mascots" aria-hidden="true">
+      <svg viewBox="0 0 58 58"><path d="M29 6c11 0 22 7 22 21 0 15-10 25-23 25S7 43 7 29C7 15 17 6 29 6z" fill="#b8ecc9" stroke="#2b2f55" stroke-width="2.4" stroke-linejoin="round"/><circle cx="38" cy="19" r="5.5" fill="#7fd39b" stroke="#2b2f55" stroke-width="2"/><circle cx="23" cy="29" r="2" fill="#2b2f55"/><circle cx="33" cy="29" r="2" fill="#2b2f55"/><path d="M23.5 34.5q4.5 4 9 0" fill="none" stroke="#2b2f55" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg viewBox="0 0 58 58"><path d="M29 5l6.6 14.2 15.4 1.9-11.4 10.6 3 15.3L29 39.4 15.4 47l3-15.3L7 21.1l15.4-1.9z" fill="#ffd166" stroke="#2b2f55" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="26" r="2" fill="#2b2f55"/><circle cx="34" cy="26" r="2" fill="#2b2f55"/><path d="M24.5 31.5q4.5 4 9 0" fill="none" stroke="#2b2f55" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <div><h1>과학 시뮬레이션 모음</h1><p>공부할 과목을 골라 들어가 보세요.</p></div>
   </header>
-  <div class="grid">
-    <a class="card" href="diurnal.html"><h2>천체의 일주운동</h2><p>지구를 가운데 둔 천구 모형을 돌리고 확대해 보며 위도와 계절에 따른 별과 태양의 하루 움직임을 살펴봐요.</p><span class="go">열기 →</span></a>
-    <a class="card" href="sun-annual.html"><h2>태양의 연주운동</h2><p>3D 공전 모형과 황도 12궁 별자리 띠로 태양이 별자리 사이를 옮겨 가는 모습과 계절별 밤하늘을 확인해요.</p><span class="go">열기 →</span></a>
-    <a class="card" href="moon-phases.html"><h2>달의 위상 변화 관찰</h2><p>달을 끌어 지구 둘레를 돌리며 햇빛을 받는 쪽과 지구에서 보이는 쪽에 따라 달 모양이 바뀌는 까닭을 살펴보고, 하늘에서 달이 보이는 방향과 시각을 찾아봐요.</p><span class="go">열기 →</span></a>
-  </div>
+  <nav class="grid" aria-label="과목">
+    <a class="subject" href="life-science/">
+      <div class="subject-head">
+        <span class="badge" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M18 4C11 4 6 9 6 16c0 6 4 9 6 12l2 4h8l2-4c2-3 6-6 6-12 0-7-5-12-12-12z" fill="#7fd39b" stroke="#2b2f55" stroke-width="2" stroke-linejoin="round"/><path d="M18 31V15m0 5l-5-4m5 1l5-4" fill="none" stroke="#2b2f55" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <div><h2>생명과학</h2><span class="count">시뮬레이션 1개</span></div>
+      </div>
+      <p>우리 몸속에서 일어나는 일을 입자와 기관의 움직임으로 살펴봐요.</p>
+      <ul class="list"><li>네프론 오줌 공장</li></ul>
+      <span class="go">들어가기 →</span>
+    </a>
+    <a class="subject earth" href="earth-science/">
+      <div class="subject-head">
+        <span class="badge" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="12" fill="#9bb8ff" stroke="#2b2f55" stroke-width="2"/><path d="M10 13c3 1 4 4 7 3s3-5 7-4M8 21c4 0 5 3 9 3 3 0 4-2 8-1" fill="none" stroke="#2b2f55" stroke-width="2" stroke-linecap="round"/><circle cx="29" cy="7" r="3" fill="#ffd166" stroke="#2b2f55" stroke-width="1.6"/></svg></span>
+        <div><h2>지구과학</h2><span class="count">시뮬레이션 3개</span></div>
+      </div>
+      <p>지구, 달, 태양과 별의 움직임을 모형으로 돌려 보며 하늘의 변화를 살펴봐요.</p>
+      <ul class="list"><li>천체의 일주운동</li><li>태양의 연주운동</li><li>달의 위상 변화 관찰</li></ul>
+      <span class="go">들어가기 →</span>
+    </a>
+  </nav>
 </div>
-
+</body>
 </html>
