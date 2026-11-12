@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>노글라쓰티쳐의 과학교실</title>
+<title>Science Class by Teacher 노글라쓰</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
 <style>
 :root{--bg1:#ecebff;--bg2:#e8f8fb;--ink:#2b2f55;--muted:#6b7099;--line:#dde2f7;--pink:#ff6f91;
@@ -17,6 +17,7 @@ body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/20
 header{display:flex;gap:14px;align-items:center}
 .ico{width:60px;height:60px;flex:none}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,46px);margin:0;line-height:1.15;word-break:keep-all}
+h1 .by{font-size:.46em;color:var(--muted);white-space:nowrap;margin-left:.15em}
 header p{margin:2px 0 0;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px;max-width:820px}
 a.subject{--c:var(--life);--soft:var(--life-soft);display:flex;flex-direction:column;gap:12px;text-decoration:none;color:var(--ink);background:#fff;border:2px solid var(--line);border-top:8px solid var(--c);border-radius:24px;padding:22px;box-shadow:0 8px 24px rgba(90,100,170,.10);transition:transform .15s,box-shadow .15s,border-color .15s}
@@ -51,7 +52,7 @@ a.subject:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
       <circle cx="26" cy="47" r="2" fill="#2b2f55"/><circle cx="38" cy="47" r="2" fill="#2b2f55"/>
       <path d="M27.5 51.5q4.5 4 9 0" fill="none" stroke="#2b2f55" stroke-width="2" stroke-linecap="round"/>
     </svg>
-    <div><h1>노글라쓰티쳐의 과학교실</h1><p>과학 시뮬레이션 모음이에요. 공부할 과목을 골라 들어가 보세요.</p></div>
+    <div><h1>Science Class <small class="by">by Teacher 노글라쓰</small></h1><p>과학 시뮬레이션 모음이에요. 공부할 과목을 골라 들어가 보세요.</p></div>
   </header>
   <nav class="grid" aria-label="과목">
     <a class="subject" href="life-science/">
