@@ -1,0 +1,6 @@
+[
+  {"id": "nephron",     "artifact": "https://claude.ai/artifact/G5g5UhCVj6PEkr4VA6gqD7", "file": "life-science/nephron.html",      "back": "../#life-science"},
+  {"id": "diurnal",     "artifact": "https://claude.ai/artifact/TphDiwA8pMVV7nTtue9WDC", "file": "earth-science/diurnal.html",     "back": "../#earth-science"},
+  {"id": "sun-annual",  "artifact": "https://claude.ai/artifact/6b1uPbB9ynRJw6JcMNCUvn", "file": "earth-science/sun-annual.html",  "back": "../#earth-science"},
+  {"id": "moon-phases", "artifact": "https://claude.ai/artifact/JP5wrEWMpwbkUsebvssfwT", "file": "earth-science/moon-phases.html", "back": "../#earth-science"}
+]

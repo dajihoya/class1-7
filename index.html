@@ -9,7 +9,7 @@
 /* 칠판: 짙은 초록 판 + 나무 테두리 + 분필 낙서. 시뮬레이션은 칠판에 붙인 종이 쪽지. */
 :root{
   --board:#2F4B3C;--board-dark:#263F32;--chalk:#F4F1E6;--chalk-dim:#C9D3C8;--wood:#8A5B37;--wood-dark:#6E4527;
-  --paper:#FFFDF5;--ink:#2B2F3A;--muted:#6A6F7C;
+  --paper:#F7F0E3;--ink:#2B2F3A;--muted:#6A6F7C;
   --life:#FF9DB5;--life-deep:#D9486E;--earth:#9CC4FF;--earth-deep:#3B6FE0;
   --frame:12px;
   --display:"Jua","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
@@ -46,17 +46,17 @@ header p{margin:4px 0 0;color:var(--chalk-dim);word-break:keep-all}
 .row h2 .count{font-size:15px;color:var(--chalk-dim)}
 
 /* 칠판에 붙인 쪽지 */
-.notes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,212px),1fr));gap:22px 18px}
-a.note{position:relative;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);background:var(--paper);
-  border-radius:6px;padding:22px 16px 16px;box-shadow:0 8px 18px rgba(0,0,0,.28),0 1px 0 rgba(0,0,0,.15);transition:transform .15s,box-shadow .15s}
+.notes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,178px),1fr));gap:20px 14px}
+a.note{position:relative;display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);background:var(--paper);
+  border-radius:6px;padding:18px 13px 13px;box-shadow:0 8px 18px rgba(0,0,0,.28),0 1px 0 rgba(0,0,0,.15);transition:transform .15s,box-shadow .15s}
 a.note::before{content:"";position:absolute;top:-8px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--c);
   box-shadow:inset -2px -3px 0 rgba(0,0,0,.18),0 2px 4px rgba(0,0,0,.35)}
 a.note:hover{transform:translateY(-3px) rotate(-.6deg);box-shadow:0 12px 24px rgba(0,0,0,.34)}
 a.note:focus-visible{outline:3px solid #FFE08A;outline-offset:3px}
-.pic{width:52px;height:52px;border-radius:14px;background:var(--bsoft,#F3F4F6);display:grid;place-items:center}
-.pic svg{width:34px;height:34px}
-a.note b{font-family:var(--display);font-weight:400;font-size:20px;line-height:1.25;word-break:keep-all}
-a.note span.d{font-size:14.5px;color:var(--muted);line-height:1.5;word-break:keep-all}
+.pic{width:44px;height:44px;border-radius:12px;background:var(--bsoft,#F3F4F6);display:grid;place-items:center}
+.pic svg{width:29px;height:29px}
+a.note b{font-family:var(--display);font-weight:400;font-size:18px;line-height:1.25;word-break:keep-all}
+a.note span.d{font-size:13.5px;color:var(--muted);line-height:1.5;word-break:keep-all}
 a.note .go{margin-top:auto;padding-top:4px;font-family:var(--display);font-size:15px;color:var(--deep)}
 
 /* 분필 받침 */
@@ -71,10 +71,10 @@ a.note .go{margin-top:auto;padding-top:4px;font-family:var(--display);font-size:
   :root{--frame:8px}
   .row h2{font-size:25px}
   .notes{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
-  a.note{padding:20px 12px 13px}
-  a.note b{font-size:17.5px}
-  a.note span.d{font-size:13.5px}
-  .pic{width:44px;height:44px}.pic svg{width:30px;height:30px}
+  a.note{padding:17px 11px 12px}
+  a.note b{font-size:16.5px}
+  a.note span.d{font-size:13px}
+  .pic{width:40px;height:40px}.pic svg{width:26px;height:26px}
 }
 @media (prefers-reduced-motion:reduce){a.note{transition:none}}
 </style>
@@ -104,9 +104,8 @@ a.note .go{margin-top:auto;padding-top:4px;font-family:var(--display);font-size:
     <div class="notes">
       <a class="note" href="life-science/nephron.html">
         <span class="pic" style="--bsoft:#FFF1F4" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M38 6c11 0 20 10 20 25S50 58 38 58c-9 0-13-6-13-12 0-5 4-7 4-14s-4-9-4-14C25 11 29 6 38 6z" fill="#E3476A"/><path d="M24 30c-6 0-10 2-12 6" stroke="#E6B02A" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="37" cy="27" r="3" fill="#2A2140"/><circle cx="48" cy="27" r="3" fill="#2A2140"/><path d="M38 34q5 5 10 0" stroke="#2A2140" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="33" cy="33" r="2.6" fill="#FFB3C4"/><circle cx="52" cy="33" r="2.6" fill="#FFB3C4"/></svg></span>
-        <b>콩팥단위 오줌 공장</b>
-        <span class="d">혈액이 여과·재흡수·분비를 거쳐 오줌이 되는 과정을 따라가요.</span>
-        <span class="go">열기 →</span>
+        <b data-sync="nephron">콩팥의 구조와 기능</b>
+        <span class="d">콩팥의 구조를 살펴보고, 콩팥 단위에서 오줌이 만들어지는 과정을 따라가요.</span>
       </a>
     </div>
   </section>
@@ -117,21 +116,18 @@ a.note .go{margin-top:auto;padding-top:4px;font-family:var(--display);font-size:
     <div class="notes">
       <a class="note" href="earth-science/diurnal.html">
         <span class="pic" style="--bsoft:#EEF2FF" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 26a11 11 0 0 1 22 0M9 26a7 7 0 0 1 14 0" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3"/><path d="M16 5l1.6 3.4 3.7.4-2.8 2.5.8 3.7-3.3-1.9-3.3 1.9.8-3.7-2.8-2.5 3.7-.4z" fill="#FBBF24" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"/><path d="M3 26h26" stroke="#4B5563" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-        <b>천체의 일주운동</b>
+        <b data-sync="diurnal">천체의 일주운동</b>
         <span class="d">천구 모형을 돌리며 별과 태양의 하루 움직임을 살펴봐요.</span>
-        <span class="go">열기 →</span>
       </a>
       <a class="note" href="earth-science/sun-annual.html">
         <span class="pic" style="--bsoft:#FFF7ED" aria-hidden="true"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="17" rx="13" ry="6" fill="none" stroke="#9CA3AF" stroke-width="1.6" stroke-dasharray="3 3"/><circle cx="16" cy="17" r="5" fill="#FB923C" stroke="#9A3412" stroke-width="1.4"/><circle cx="27.5" cy="14" r="2.6" fill="#60A5FA" stroke="#1E3A8A" stroke-width="1.2"/></svg></span>
-        <b>태양의 연주운동</b>
+        <b data-sync="sun-annual">태양의 연주운동</b>
         <span class="d">공전 모형과 황도 12궁으로 태양이 별자리 사이를 옮겨 가는 모습을 봐요.</span>
-        <span class="go">열기 →</span>
       </a>
       <a class="note" href="earth-science/moon-phases.html">
         <span class="pic" style="--bsoft:#1E2650" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M19 5a11 11 0 1 0 8 18 9 9 0 0 1-8-18z" fill="#FFE49A"/><circle cx="25" cy="8" r="1.2" fill="#fff"/><circle cx="8" cy="9" r="1" fill="#fff" opacity=".7"/></svg></span>
-        <b>달의 위상 변화 관찰</b>
+        <b data-sync="moon-phases">달의 위상 변화 관찰</b>
         <span class="d">달을 돌리며 모양이 바뀌는 까닭과 보이는 시각을 찾아봐요.</span>
-        <span class="go">열기 →</span>
       </a>
     </div>
   </section>

@@ -1,10 +1,5 @@
-<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>[hidden]{display:none!important}body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}</style>
-<title>콩팥단위 오줌 공장</title>
+<!doctype html><html lang="ko"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>콩팥의 구조와 기능</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +11,7 @@
   --ink:#23263B; --muted:#5A6085; --line:#D5DBEE;
   --vessel:#E3476A; --vessel-lumen:#FCDDE4; --tube:#E6B02A; --tube-lumen:#FFF3CB;
   --c-filter:#3B78F2; --c-reab:#12996A; --c-secr:#E2641F; --on-stage:#FFFFFF; --warn:#D2364B;
+  --vein:#5468D4; --kid-1:#F4BDB2; --kid-2:#E38C82; --kid-edge:#C9675D;
   --f-display:"Jua","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --f-body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
 }
@@ -25,6 +21,7 @@
     --ink:#ECEFFC; --muted:#A5ABCB; --line:#30365A;
     --vessel:#FF6585; --vessel-lumen:#47202E; --tube:#EFC24A; --tube-lumen:#3A3117;
     --c-filter:#76A2FF; --c-reab:#43D29A; --c-secr:#FF9858; --on-stage:#11142A; --warn:#FF6E80;
+    --vein:#8C9DF5; --kid-1:#6A3A42; --kid-2:#8C4E57; --kid-edge:#B97680;
     color-scheme:dark;
   }
 }
@@ -33,9 +30,11 @@
   --ink:#ECEFFC; --muted:#A5ABCB; --line:#30365A;
   --vessel:#FF6585; --vessel-lumen:#47202E; --tube:#EFC24A; --tube-lumen:#3A3117;
   --c-filter:#76A2FF; --c-reab:#43D29A; --c-secr:#FF9858; --on-stage:#11142A; --warn:#FF6E80;
+    --vein:#8C9DF5; --kid-1:#6A3A42; --kid-2:#8C4E57; --kid-edge:#B97680;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
 .page{max-width:1260px;margin:0 auto;padding-block:28px 44px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:20px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -152,6 +151,26 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
 .arrow{color:var(--muted);font-family:var(--f-display);font-size:18px;padding:0 2px}
 .term{border-radius:14px;padding:12px 14px;background:var(--panel-2);border:1px solid var(--line);font-size:15px}
 .term b{font-family:var(--f-display);font-weight:400;font-size:16px}
+.sum th small{display:block;font-family:var(--f-body);font-size:12px;margin-top:2px}
+.sum .nm{white-space:nowrap}
+.kid{margin:2px 0 12px}
+.kid svg{display:block;width:100%;max-width:460px;height:auto;margin:0 auto}
+.kid figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:2px}
+.k-cortex{fill:var(--kid-1);stroke:var(--kid-edge);stroke-width:2.5}
+.k-medulla{fill:var(--kid-2)}
+.k-pelvis{fill:var(--tube-lumen);stroke:var(--tube);stroke-width:3;stroke-linejoin:round}
+.k-ureter{fill:none;stroke:var(--tube);stroke-width:12;stroke-linecap:round}
+.k-ureter-in{fill:none;stroke:var(--tube-lumen);stroke-width:5;stroke-linecap:round}
+.k-art{fill:none;stroke:var(--vessel);stroke-width:8;stroke-linecap:round}
+.k-vein{fill:none;stroke:var(--vein);stroke-width:8;stroke-linecap:round}
+.k-neph{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.k-glom{fill:var(--vessel);stroke:var(--ink);stroke-width:2}
+.k-lead{fill:none;stroke:var(--muted);stroke-width:1.5}
+.k-lbl{fill:var(--ink);font-family:var(--f-display);font-size:17px}
+.neph{display:flex;flex-direction:column;gap:4px;padding:6px 8px 8px;border-radius:14px;border:2px dashed var(--tube);background:var(--tube-lumen)}
+.neph-tag{font-family:var(--f-display);font-size:13px;line-height:1;color:var(--ink)}
+.neph-row{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.route .stop{padding:6px 10px}
 .foot{font-size:14px;color:var(--muted);margin:0;max-width:80ch}
 
 @media (max-width:560px){
@@ -159,8 +178,48 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
   .speed input{flex:1}
   .top svg{width:48px;height:48px}
 }
+.view{display:grid;gap:20px}
+.view-in{animation:viewIn .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes viewIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.kidney-card{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:center}
+@media (max-width:820px){.kidney-card{grid-template-columns:minmax(0,1fr)}}
+.kid-big{margin:0;overflow:hidden;border-radius:16px;background:var(--stage);padding:14px 8px 10px}
+.kid-big svg{display:block;width:100%;max-width:500px;height:auto;margin:0 auto;transition:transform .6s cubic-bezier(.55,0,.35,1),opacity .6s ease-in}
+.kid-big svg.zoom{transform:scale(6);opacity:0}
+.kid-big figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px}
+.kid-big figcaption b{font-family:var(--f-display);font-weight:400;color:var(--ink)}
+.kid-text{display:grid;gap:12px;min-width:0}
+.kid-text h2,.kid-text p{margin:0}
+.parts{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.parts li{display:grid;grid-template-columns:18px 5.2em minmax(0,1fr);gap:10px;align-items:center}
+.parts b{font-family:var(--f-display);font-weight:400;font-size:17px}
+.parts span{color:var(--muted);font-size:15px}
+.sw{display:block;width:18px;height:18px;border-radius:6px;border:2px solid var(--kid-edge)}
+.go{justify-self:start;font-size:17px;padding:12px 18px}
+.k-unit{cursor:pointer;outline:none}
+.k-halo{fill:none;stroke:var(--tube);stroke-width:14;stroke-linecap:round;stroke-linejoin:round;opacity:.5;animation:halo 1.6s ease-in-out infinite}
+@keyframes halo{0%,100%{opacity:.2}50%{opacity:.85}}
+.k-unit:hover .k-halo,.k-unit:focus-visible .k-halo{animation:none;opacity:1}
+.k-unit:focus-visible .k-unit-lbl{text-decoration:underline}
+.k-hit{fill:none;stroke:transparent;stroke-width:30;stroke-linecap:round;pointer-events:stroke}
+.k-hit-r{fill:transparent}
+.k-other{opacity:.5}
+.k-bladder-fill{fill:var(--tube-lumen)}
+.k-urine{fill:var(--tube);opacity:.45}
+.k-bladder-line{fill:none;stroke:var(--tube);stroke-width:3}
+.k-sub{fill:var(--muted);font-family:var(--f-body);font-size:13px}
+.parts-h{margin:4px 0 -4px;font-family:var(--f-display);font-weight:400;font-size:15px;color:var(--muted);letter-spacing:.02em}
+.unit-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.crumb{margin:0;color:var(--muted);font-family:var(--f-display);font-size:17px}
+.crumb b{font-weight:400;color:var(--ink)}
+.crumb-hint{margin:0 0 0 auto;color:var(--muted);font-size:14px}
+button.neph{font:inherit;color:inherit;text-align:left;cursor:pointer}
+button.neph:hover{border-style:solid}
+.neph .stop{display:grid}
+.back-k{margin-top:12px}
+@media (max-width:560px){.crumb-hint{margin-left:0}}
 @media (prefers-reduced-motion: reduce){
-  *{transition:none!important}
+  *{transition:none!important;animation:none!important}
 }
 </style>
 
@@ -174,14 +233,103 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
       <circle cx="33" cy="33" r="2.6" fill="#FFB3C4"/><circle cx="52" cy="33" r="2.6" fill="#FFB3C4"/>
     </svg>
     <div>
-      <p class="eyebrow">중학교 과학 · 배설</p>
-      <h1>콩팥단위 오줌 공장</h1>
-      <p class="lede">혈액이 콩팥단위를 지나며 오줌이 되는 과정을 입자 친구들과 따라가 봐요. 화면 속 입자를 누르면 누구인지, 지금 무엇을 하는지 알려 줘요.</p>
+      <p class="eyebrow">중학교 과학 2 · 동물과 에너지 · 배설</p>
+      <h1>콩팥의 구조와 기능</h1>
+      <p class="lede">콩팥의 구조를 먼저 살펴보고, 오줌을 만드는 콩팥 단위를 눌러 그 안에서 혈액이 오줌이 되는 과정을 입자 친구들과 따라가 봐요.</p>
     </div>
   </header>
 
+  <section class="view" id="kidneyView" aria-label="배설계의 구조">
+    <div class="card kidney-card">
+      <figure class="kid-big">
+        <svg id="kidSvg" viewBox="0 0 460 480" role="group" aria-labelledby="kidT">
+          <title id="kidT">배설계의 구조. 콩팥은 바깥쪽부터 콩팥겉질, 콩팥속질, 가장 안쪽의 빈 공간인 콩팥깔때기로 되어 있어요. 콩팥깔때기는 오줌관으로, 오줌관은 방광으로, 방광은 요도로 이어져요. 방광에는 반대쪽 콩팥에서 오는 오줌관도 연결돼 있어요. 콩팥 단위는 콩팥겉질과 콩팥속질에 걸쳐 있어요.</title>
+          <defs><clipPath id="bladClip"><path d="M262,372 C262,342 296,330 330,330 C364,330 398,342 398,372 C398,410 372,432 346,438 L314,438 C288,432 262,410 262,372 Z"/></clipPath></defs>
+          <path class="k-art" d="M294,118 C330,114 360,100 452,100"/>
+          <path class="k-vein" d="M294,129 C335,127 370,121 452,121"/>
+          <path class="k-cortex" d="M220,20 C300,20 335,70 330,105 C326,125 300,125 300,140 C300,155 326,155 330,175 C335,210 300,260 220,260 C140,260 110,200 110,140 C110,80 140,20 220,20 Z"/>
+          <path class="k-medulla" d="M220,58 C276,58 292,90 286,110 L278,140 L286,170 C292,192 276,222 220,222 C164,222 150,188 150,140 C150,92 164,58 220,58 Z"/>
+          <path class="k-pelvis" d="M236,112 C246,116 252,126 262,130 L300,134 L300,146 L262,150 C252,154 246,164 236,168 C230,160 240,150 240,140 C240,130 230,120 236,112 Z"/>
+          <g class="k-other">
+            <path class="k-ureter" d="M462,262 C430,290 372,316 344,350"/>
+            <path class="k-ureter-in" d="M462,262 C430,290 372,316 344,350"/>
+          </g>
+          <path class="k-ureter" d="M288,140 C345,140 352,172 352,240 C352,290 336,318 318,352"/>
+          <path class="k-ureter-in" d="M288,140 C345,140 352,172 352,240 C352,290 336,318 318,352"/>
+          <path class="k-ureter" d="M330,430 L330,474"/>
+          <path class="k-ureter-in" d="M330,430 L330,474"/>
+          <path class="k-bladder-fill" d="M262,372 C262,342 296,330 330,330 C364,330 398,342 398,372 C398,410 372,432 346,438 L314,438 C288,432 262,410 262,372 Z"/>
+          <rect class="k-urine" x="250" y="396" width="160" height="50" clip-path="url(#bladClip)"/>
+          <path class="k-bladder-line" d="M262,372 C262,342 296,330 330,330 C364,330 398,342 398,372 C398,410 372,432 346,438 L314,438 C288,432 262,410 262,372 Z"/>
+          <path class="k-lead" d="M78,170 L130,170"/>
+          <path class="k-lead" d="M78,228 L186,196"/>
+          <path class="k-lead" d="M258,152 L258,274"/>
+          <text class="k-lbl" x="8" y="176">콩팥겉질</text>
+          <text class="k-lbl" x="8" y="234">콩팥속질</text>
+          <text class="k-lbl" x="258" y="292" text-anchor="middle">콩팥깔때기</text>
+          <text class="k-lbl" x="334" y="272" text-anchor="end">오줌관</text>
+          <text class="k-lbl" x="452" y="88" text-anchor="end">콩팥동맥</text>
+          <text class="k-lbl" x="452" y="148" text-anchor="end">콩팥정맥</text>
+          <text class="k-sub" x="458" y="252" text-anchor="end">반대쪽 콩팥에서</text>
+          <text class="k-lbl" x="408" y="396">방광</text>
+          <text class="k-lbl" x="342" y="468">요도</text>
+          <g class="k-unit" id="kUnit" tabindex="0" role="button" aria-label="콩팥 단위를 크게 보기">
+            <path class="k-halo" d="M136,118 C141,110 145,126 150,118 L210,140 Q216,136 208,133 L158,102 C152,98 156,90 162,92 C168,94 166,86 170,86 L234,110"/>
+            <circle class="k-halo" cx="130" cy="118" r="8"/>
+            <path class="k-neph" d="M136,118 C141,110 145,126 150,118 L210,140 Q216,136 208,133 L158,102 C152,98 156,90 162,92 C168,94 166,86 170,86 L234,110"/>
+            <circle class="k-glom" id="kGlom" cx="130" cy="118" r="6.5"/>
+            <path class="k-lead" d="M86,50 L124,112"/>
+            <text class="k-lbl k-unit-lbl" x="8" y="52">콩팥 단위</text>
+            <rect class="k-hit-r" x="0" y="28" width="92" height="34"/>
+            <path class="k-hit" d="M136,118 C141,110 145,126 150,118 L210,140 Q216,136 208,133 L158,102 C152,98 156,90 162,92 C168,94 166,86 170,86 L234,110"/>
+          </g>
+        </svg>
+        <figcaption>반짝이는 <b>콩팥 단위</b>를 누르면 그 안을 크게 볼 수 있어요.</figcaption>
+      </figure>
+      <div class="kid-text">
+        <h2>배설계의 구조</h2>
+        <p>배설계는 콩팥, 오줌관, 방광, 요도로 이루어져 있어요. 콩팥은 강낭콩 모양으로 등허리 쪽에 좌우 한 쌍이 있고, 혈액 속 노폐물을 걸러 오줌을 만들어요.</p>
+        <h3 class="parts-h">콩팥</h3>
+        <ul class="parts">
+          <li><i class="sw" style="background:var(--kid-1)"></i><b>콩팥겉질</b><span>콩팥의 바깥 부분</span></li>
+          <li><i class="sw" style="background:var(--kid-2)"></i><b>콩팥속질</b><span>콩팥의 중간 부분</span></li>
+          <li><i class="sw" style="background:var(--tube-lumen);border-color:var(--tube)"></i><b>콩팥깔때기</b><span>가장 안쪽의 빈 공간으로, 만들어진 오줌이 모여요</span></li>
+        </ul>
+        <h3 class="parts-h">오줌을 내보내는 기관</h3>
+        <ul class="parts">
+          <li><i class="sw" style="background:var(--tube);border-color:var(--tube)"></i><b>오줌관</b><span>콩팥에서 만든 오줌을 방광으로 보내요</span></li>
+          <li><i class="sw" style="background:var(--tube-lumen);border-color:var(--tube)"></i><b>방광</b><span>오줌을 잠시 모아 두어요</span></li>
+          <li><i class="sw" style="background:var(--tube);border-color:var(--tube)"></i><b>요도</b><span>오줌이 몸 밖으로 나가는 통로예요</span></li>
+        </ul>
+        <div class="term"><b>콩팥 단위</b> = 토리 + 보먼주머니 + 세뇨관<br>오줌을 만드는 단위로, 콩팥 하나에 약 100만 개가 있어요. 콩팥겉질과 콩팥속질에 걸쳐 있어요.</div>
+        <button class="btn primary go" type="button" data-go="unit">콩팥 단위 들여다보기
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>오줌이 나가는 길</h2>
+      <div class="route">
+        <div class="stop"><b>콩팥동맥</b></div><span class="arrow">→</span>
+        <button type="button" class="neph" data-go="unit"><span class="neph-tag">콩팥 단위 · 눌러서 안을 보기</span><span class="neph-row"><span class="stop"><b>토리</b></span><span class="arrow">→</span><span class="stop"><b>보먼주머니</b></span><span class="arrow">→</span><span class="stop"><b>세뇨관</b></span></span></button><span class="arrow">→</span>
+        <div class="stop"><b>콩팥깔때기</b></div><span class="arrow">→</span>
+        <div class="stop"><b>오줌관</b></div><span class="arrow">→</span>
+        <div class="stop"><b>방광</b></div><span class="arrow">→</span>
+        <div class="stop"><b>요도</b></div><span class="arrow">→</span>
+        <div class="stop"><b>몸 밖</b></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="view" id="unitView" hidden>
+    <div class="unit-bar">
+      <button class="btn" type="button" data-go="kidney">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H4M7.5 4.5 4 8l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>배설계 구조로</button>
+      <p class="crumb">콩팥 › <b>콩팥 단위 하나를 크게 본 모습</b></p>
+      <p class="crumb-hint">화면 속 입자를 누르면 이름과 하는 일을 알려 줘요.</p>
+    </div>
+
   <main class="layout">
-    <section class="stage-wrap" id="stageWrap" aria-label="콩팥단위 시뮬레이션">
+    <section class="stage-wrap" id="stageWrap" aria-label="콩팥 단위 시뮬레이션">
       <div class="stage-bar" role="group" aria-label="과정 선택">
         <button class="seg all" type="button" id="st-all" data-stage="all" aria-pressed="true">전체 보기</button>
         <button class="seg" type="button" id="st-filter" data-stage="filter" aria-pressed="false" style="--sc:var(--c-filter)">① 여과 <span class="cnt" id="cnt-filter">0</span></button>
@@ -190,7 +338,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
       </div>
       <div class="canvas-box" id="canvasBox">
         <canvas id="sim" aria-describedby="simDesc"></canvas>
-        <p class="sr-only" id="simDesc">들세동맥으로 들어온 혈액이 사구체를 지나며 작은 물질이 보먼주머니로 여과되고, 세뇨관을 지나는 동안 포도당·아미노산·물·무기염류는 모세혈관으로 재흡수되며, 혈액에 남은 요소는 세뇨관으로 분비되어 집합관을 거쳐 오줌이 되는 모습을 보여 주는 애니메이션입니다.</p>
+        <p class="sr-only" id="simDesc">콩팥동맥으로 들어온 혈액이 토리를 지나며 크기가 작은 물질이 보먼주머니로 여과되고, 세뇨관을 지나는 동안 포도당·아미노산·물·무기염류는 모세혈관으로 재흡수되며, 모세혈관에 남은 요소는 세뇨관으로 분비되어 콩팥깔때기로 모이는 오줌이 되는 모습을 보여 주는 애니메이션입니다.</p>
       </div>
       <div class="controls">
         <button class="btn primary" type="button" id="playBtn"></button>
@@ -211,7 +359,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
         <div class="scen" role="group" aria-label="콩팥 상태">
           <button class="seg" type="button" id="sc-normal" data-scen="normal" aria-pressed="true">건강한 콩팥</button>
           <button class="seg" type="button" id="sc-sugar" data-scen="sugar" aria-pressed="false">혈당이 아주 높을 때</button>
-          <button class="seg" type="button" id="sc-glom" data-scen="glom" aria-pressed="false">사구체가 손상됐을 때</button>
+          <button class="seg" type="button" id="sc-glom" data-scen="glom" aria-pressed="false">토리가 손상됐을 때</button>
         </div>
         <p class="scen-desc" id="scenDesc"></p>
         <div class="dip">
@@ -229,7 +377,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
           <thead><tr><th>물질</th><th>오줌으로</th><th>혈액으로</th></tr></thead>
           <tbody id="tallyBody"></tbody>
         </table>
-        <p class="note-small">혈액으로: 콩팥 정맥을 따라 몸으로 돌아간 입자 수예요.</p>
+        <p class="note-small">혈액으로: 콩팥정맥을 따라 몸으로 돌아간 입자 수예요.</p>
       </div>
     </aside>
   </main>
@@ -242,7 +390,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
       </div>
       <div class="tbl-wrap">
         <table class="sum" id="sumTable">
-          <thead><tr><th>물질</th><th>여과</th><th>재흡수</th><th>분비</th></tr></thead>
+          <thead><tr><th>물질</th><th>여과<small>토리 → 보먼주머니</small></th><th>재흡수<small>세뇨관 → 모세혈관</small></th><th>분비<small>모세혈관 → 세뇨관</small></th></tr></thead>
           <tbody id="sumBody"></tbody>
         </table>
       </div>
@@ -252,17 +400,21 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
     <div class="card">
       <h2>오줌이 나가는 길</h2>
       <div class="route">
-        <div class="stop hl"><b>콩팥</b><small>콩팥단위에서 생성</small></div><span class="arrow">→</span>
-        <div class="stop"><b>콩팥 깔때기</b><small>모이는 곳</small></div><span class="arrow">→</span>
-        <div class="stop"><b>오줌관</b><small>방광으로 이동</small></div><span class="arrow">→</span>
-        <div class="stop"><b>방광</b><small>모아 두는 곳</small></div><span class="arrow">→</span>
-        <div class="stop"><b>요도</b><small>몸 밖으로</small></div>
+        <div class="stop"><b>콩팥동맥</b></div><span class="arrow">→</span>
+        <div class="neph"><span class="neph-tag">콩팥 단위</span><span class="neph-row"><span class="stop"><b>토리</b></span><span class="arrow">→</span><span class="stop"><b>보먼주머니</b></span><span class="arrow">→</span><span class="stop"><b>세뇨관</b></span></span></div><span class="arrow">→</span>
+        <div class="stop"><b>콩팥깔때기</b></div><span class="arrow">→</span>
+        <div class="stop"><b>오줌관</b></div><span class="arrow">→</span>
+        <div class="stop"><b>방광</b></div><span class="arrow">→</span>
+        <div class="stop"><b>요도</b></div><span class="arrow">→</span>
+        <div class="stop"><b>몸 밖</b></div>
       </div>
-      <div class="term"><b>콩팥단위</b> = 사구체 + 보먼주머니 + 세뇨관<br>오줌을 만드는 단위로, 콩팥 하나에 약 100만 개가 있어요.</div>
+      <div class="term"><b>콩팥 단위</b> = 토리 + 보먼주머니 + 세뇨관<br>위의 시뮬레이션은 콩팥 단위 하나를 크게 그린 모습이에요.</div>
+      <button class="btn back-k" type="button" data-go="kidney">배설계 구조 다시 보기</button>
     </div>
   </section>
 
-  <p class="foot">실제 콩팥에서는 여과된 물의 약 99%가 다시 흡수돼요. 화면에서는 오줌이 잘 보이도록 물이 더 많이 남게 비율을 바꿨고, 입자의 크기도 실제 크기 비율과 다릅니다.</p>
+  <p class="foot">실제 콩팥에서는 여과된 물의 약 99%가 다시 흡수돼요. 화면에서는 오줌이 잘 보이도록 물이 더 많이 남게 비율을 바꿨어요. 요소도 실제로는 일부가 다시 흡수되지만 중학교 수준에 맞춰 나타내지 않았고, 입자의 크기도 실제 크기 비율과 달라요.</p>
+  </div>
 </div>
 
 <script>
@@ -272,6 +424,7 @@ const canvas=document.getElementById('sim');
 const ctx=canvas.getContext('2d');
 const box=document.getElementById('canvasBox');
 const wrap=document.getElementById('stageWrap');
+const unitView=document.getElementById('unitView'),kidneyView=document.getElementById('kidneyView');
 const FONT='Jua, "Gowun Dodum", system-ui, sans-serif';
 const DEG=Math.PI/180;
 const FACE='#2A2140';
@@ -298,7 +451,7 @@ const SCEN={
     desc:'혈액 속 포도당이 아주 많아요. 세뇨관이 재흡수할 수 있는 양에는 한계가 있어요.'},
   glom:{mix:{rbc:19,protein:8,glucose:12,amino:9,water:36,salt:11,urea:11},
     filter:Object.assign({},BASE_FILTER,{rbc:.14,protein:.5}),reab:BASE_REAB,
-    desc:'사구체의 걸러 내는 벽에 큰 틈이 생겼어요. 크기가 큰 물질은 어떻게 될까요?'}
+    desc:'토리의 걸러 내는 벽에 큰 틈이 생겼어요. 크기가 큰 물질은 어떻게 될까요?'}
 };
 
 /* 두 가지 배치: 넓은 화면(가로), 좁은 화면(세로) */
@@ -306,12 +459,12 @@ const LAYOUTS={
   land:{W:1000,H:600,C:[190,190],a0:215,a1:505,font:15,
     aff:[[-24,58],[45,80],[100,115]],
     eff:[[115,240],[105,290],[160,318],[250,310],[310,262],[360,238],[410,236],[445,240],[442,282],[442,380],[442,465],[452,530],[540,565],[628,530],[638,465],[638,380],[638,290],[655,252],[700,243],[745,240],[775,270],[778,330],[778,450],[778,560],[778,660]],
-    tube:[[253,190],[272,190],[300,170],[340,198],[380,168],[420,196],[458,192],[480,228],[480,300],[480,400],[480,460],[490,505],[540,525],[590,505],[600,460],[600,400],[600,300],[600,235],[615,200],[645,182],[685,205],[725,180],[765,205],[805,182],[845,200],[872,232],[880,280],[880,400],[880,470],[880,522]],
-    cup:[880,548],
+    tube:[[253,190],[272,190],[300,170],[340,198],[380,168],[420,196],[458,192],[480,228],[480,300],[480,400],[480,460],[490,505],[540,525],[590,505],[600,460],[600,400],[600,300],[600,235],[615,200],[645,182],[685,205],[725,180],[765,205],[805,182],[835,198],[852,232],[855,280],[855,400],[855,470],[855,522]],
+    cup:[855,548],
     labels:[
-      {t:'들세동맥',x:16,y:36,a:'left'},{t:'날세동맥',x:16,y:352,a:'left'},
-      {t:'보먼주머니',x:190,y:94},{t:'사구체',x:190,y:190},{t:'세뇨관',x:360,y:132},
-      {t:'모세혈관',x:386,y:330},{t:'집합관',x:938,y:360},{t:'콩팥 정맥으로 ↓',x:700,y:575}
+      {t:'콩팥동맥에서',x:16,y:36,a:'left'},
+      {t:'보먼주머니',x:190,y:94},{t:'토리',x:190,y:190},{t:'세뇨관',x:360,y:132},
+      {t:'모세혈관',x:386,y:330},{t:'콩팥깔때기로',x:878,y:390,a:'left'},{t:'콩팥정맥으로 ↓',x:695,y:575}
     ]},
   port:{W:620,H:900,C:[130,190],a0:145,a1:-145,font:19,
     aff:[[-20,330],[20,300],[55,250]],
@@ -319,9 +472,9 @@ const LAYOUTS={
     tube:[[193,190],[212,192],[242,176],[274,204],[306,182],[332,205],[338,245],[338,420],[338,600],[338,655],[348,700],[398,720],[448,700],[458,655],[458,480],[458,300],[458,240],[470,205],[498,190],[528,212],[552,196],[570,225],[572,280],[572,600],[572,790],[572,812]],
     cup:[572,840],
     labels:[
-      {t:'들세동맥',x:12,y:372,a:'left'},{t:'날세동맥',x:95,y:36},
-      {t:'보먼주머니',x:130,y:298},{t:'사구체',x:130,y:190},{t:'세뇨관',x:262,y:262},
-      {t:'모세혈관',x:398,y:440},{t:'집합관',x:515,y:520},{t:'콩팥 정맥으로 ↑',x:465,y:28}
+      {t:'콩팥동맥에서',x:12,y:372,a:'left'},
+      {t:'보먼주머니',x:130,y:298},{t:'토리',x:130,y:190},{t:'세뇨관',x:262,y:262},
+      {t:'모세혈관',x:398,y:440},{t:'콩팥깔때기로 →',x:452,y:842},{t:'콩팥정맥으로 ↑',x:465,y:28}
     ]}
 };
 
@@ -526,7 +679,7 @@ function update(dt){
       if(p.s>=TUBE.len){
         p.dead=true; urine[p.type]++; cupCount++;
         if(!silent)splashes.push({x:L.cup[0],y:L.cup[1]-26,age:0});
-        if(cupCount>=CUP_CAP){cupCount=0;addBubble('방광으로 보내요!','cup',L.cup[0]-20,L.cup[1]-40);}
+        if(cupCount>=CUP_CAP){cupCount=0;addBubble('오줌관을 지나 방광으로!','cup',L.cup[0]-20,L.cup[1]-40);}
         continue;
       }
     }else{
@@ -753,20 +906,20 @@ function resize(force){
 /* ---------- 화면 글 ---------- */
 function chips(types,extra){return '<div class="chips">'+types.map(function(t){return '<span class="chip"><canvas data-icon="'+t+'" aria-hidden="true"></canvas>'+TYPES[t].name+(extra&&extra[t]?' '+extra[t]:'')+'</span>';}).join('')+'</div>';}
 const EXPLAIN={
-  all:function(){return '<h2>오줌이 만들어지는 세 과정</h2><p>혈액이 <b>사구체</b>를 지나며 걸러지고, <b>세뇨관</b>을 지나는 동안 필요한 물질은 혈액으로 돌아가고 노폐물은 더해져요. 위의 단계를 하나씩 눌러 보세요.</p>'+
+  all:function(){return '<h2>오줌이 만들어지는 세 과정</h2><p><b>콩팥 단위</b>는 토리, 보먼주머니, 세뇨관으로 이루어진, 오줌을 만드는 단위예요. 콩팥동맥으로 들어온 혈액이 토리에서 걸러지고, 세뇨관을 지나는 동안 필요한 물질은 모세혈관으로 돌아가요. 모세혈관에 남은 노폐물은 세뇨관으로 옮겨 가요.</p><p>위의 단계를 하나씩 눌러 보세요.</p>'+
     '<ul class="flow3">'+
-    '<li><span class="tag" style="--sc:var(--c-filter)">여과</span>사구체 → 보먼주머니<b id="f3-filter">0</b></li>'+
+    '<li><span class="tag" style="--sc:var(--c-filter)">여과</span>토리 → 보먼주머니<b id="f3-filter">0</b></li>'+
     '<li><span class="tag" style="--sc:var(--c-reab)">재흡수</span>세뇨관 → 모세혈관<b id="f3-reab">0</b></li>'+
     '<li><span class="tag" style="--sc:var(--c-secr)">분비</span>모세혈관 → 세뇨관<b id="f3-secr">0</b></li></ul>';},
-  filter:function(){return '<h2>① 여과</h2><p class="dir">사구체 → 보먼주머니</p><p>사구체의 높은 혈압 때문에 크기가 작은 물질이 보먼주머니로 빠져나가요.</p>'+
+  filter:function(){return '<h2>① 여과</h2><p class="dir">토리 → 보먼주머니</p><p>혈액이 토리를 지나는 동안 크기가 작은 물질이 물과 함께 보먼주머니로 빠져나가요. 보먼주머니로 빠져나간 액체를 <b>여과액</b>이라고 해요.</p>'+
     '<h3>빠져나가요</h3>'+chips(['water','glucose','amino','salt','urea'])+
     '<h3>크기가 커서 못 나가요</h3>'+chips(['rbc','protein']);},
   reab:function(){return '<h2>② 재흡수</h2><p class="dir">세뇨관 → 모세혈관</p><p>몸에 필요한 물질이 세뇨관을 둘러싼 모세혈관으로 다시 흡수돼요.</p>'+
     '<h3>모두 재흡수돼요</h3>'+chips(['glucose','amino'])+
     '<h3>대부분 재흡수돼요</h3>'+chips(['water','salt'])+
-    '<h3>거의 재흡수되지 않아요</h3>'+chips(['urea']);},
-  secr:function(){return '<h2>③ 분비</h2><p class="dir">모세혈관 → 세뇨관</p><p>여과되지 않고 혈액에 남아 있던 노폐물이 모세혈관에서 세뇨관으로 옮겨 가요. 여과보다 훨씬 적은 양이 이동해요.</p>'+
-    '<h3>분비돼요</h3>'+chips(['urea'],{urea:'같은 노폐물'});}
+    '<h3>노폐물은 세뇨관에 남아요</h3>'+chips(['urea'])+'<p class="note-small">물이 대부분 재흡수되기 때문에, 요소는 여과액보다 오줌에서 더 진해요.</p>';},
+  secr:function(){return '<h2>③ 분비</h2><p class="dir">모세혈관 → 세뇨관</p><p>토리에서 여과되지 않고 모세혈관에 남아 있던 노폐물이 세뇨관으로 옮겨 가요. 여과보다 적은 양이 이동해요.</p>'+
+    '<h3>분비돼요</h3>'+chips(['urea']);}
 };
 const explainEl=document.getElementById('explain');
 function renderExplain(){
@@ -791,7 +944,7 @@ const SUM=[
   ['amino',['o','○'],['o','모두'],['s','–']],
   ['water',['o','○'],['o','대부분'],['s','–']],
   ['salt',['o','○'],['o','대부분'],['s','–']],
-  ['urea',['o','○'],['x','거의 안 됨'],['o','○']]
+  ['urea',['o','○'],['x','✕'],['o','○']]
 ];
 const sumBody=document.getElementById('sumBody');
 sumBody.innerHTML=SUM.map(function(r){
@@ -837,7 +990,7 @@ function updateDom(force){
   else{
     msg='';
     if(g)msg+='오줌에서 포도당이 나왔어요. 혈당이 너무 높으면 세뇨관이 포도당을 다 재흡수하지 못해 오줌으로 나와요. 당뇨병을 확인할 때 이 검사를 해요. ';
-    if(pr)msg+='오줌에서 단백질이 나왔어요. 사구체가 손상되면 크기가 큰 단백질도 여과돼요.'+(rb?' 적혈구도 섞여 나왔어요.':'');
+    if(pr)msg+='오줌에서 단백질이 나왔어요. 토리가 손상되면 크기가 큰 단백질도 여과돼요.'+(rb?' 적혈구도 섞여 나왔어요.':'');
   }
   if(testMsg.textContent!==msg.trim())testMsg.textContent=msg.trim();
 }
@@ -866,7 +1019,7 @@ document.querySelectorAll('[data-scen]').forEach(function(b){
     scenario=b.getAttribute('data-scen');
     document.querySelectorAll('[data-scen]').forEach(function(o){o.setAttribute('aria-pressed',String(o===b));});
     scenDesc.textContent=SCEN[scenario].desc;
-    clearSim();prewarm(34);updateDom(true);
+    clearSim();if(L)prewarm(34);updateDom(true);
   });
 });
 
@@ -902,6 +1055,36 @@ function describe(p){
   return n+' · 보먼주머니를 지나는 중';
 }
 
+/* 화면 전환: 콩팥 구조 <-> 콩팥 단위 */
+const kidSvg=document.getElementById('kidSvg'),kGlom=document.getElementById('kGlom'),kUnit=document.getElementById('kUnit');
+let view=null,zooming=false;
+function applyView(v,anim){
+  if(v===view)return; view=v;
+  const unit=v==='unit';
+  kidneyView.hidden=unit; unitView.hidden=!unit;
+  const el=unit?unitView:kidneyView;
+  if(anim&&!reduceMotion){el.classList.remove('view-in');void el.offsetWidth;el.classList.add('view-in');}
+  if(unit)requestAnimationFrame(function(){resize(true);});
+  if(anim)window.scrollTo(0,0);
+}
+function setView(v){applyView(v,true);try{if(location.hash!=='#'+v)location.hash=v;}catch(e){}}
+function zoomToUnit(){
+  if(zooming)return;
+  if(reduceMotion||kidneyView.hidden){setView('unit');return;}
+  zooming=true;
+  const r=kidSvg.getBoundingClientRect(),g=kGlom.getBoundingClientRect();
+  kidSvg.style.transformOrigin=(g.left+g.width/2-r.left)+'px '+(g.top+g.height/2-r.top)+'px';
+  kidSvg.classList.add('zoom');
+  setTimeout(function(){setView('unit');kidSvg.classList.remove('zoom');zooming=false;},600);
+}
+document.querySelectorAll('[data-go]').forEach(function(b){
+  b.addEventListener('click',function(){if(b.getAttribute('data-go')==='unit')zoomToUnit();else setView('kidney');});
+});
+kUnit.addEventListener('click',zoomToUnit);
+kUnit.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();zoomToUnit();}});
+window.addEventListener('hashchange',function(){applyView(location.hash==='#unit'?'unit':'kidney',true);});
+applyView(location.hash==='#unit'?'unit':'kidney',false);
+
 /* 테마 */
 readTheme();
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',readTheme);
@@ -919,6 +1102,7 @@ window.addEventListener('resize',function(){resize(false);});
 let last=performance.now();
 function frame(now){
   const dtReal=Math.min(0.05,(now-last)/1000);last=now;nowMs=now;
+  if(unitView.hidden){requestAnimationFrame(frame);return;}
   if(!L){resize(true);if(!L){requestAnimationFrame(frame);return;}renderExplain();}
   if(running)update(dtReal*speed);
   draw(now/1000,dtReal);
@@ -929,5 +1113,5 @@ requestAnimationFrame(frame);
 })();
 </script>
 
-<a href="../#life-science" style="position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:50;font-family:Jua,sans-serif;font-size:14px;text-decoration:none;color:#2b2f55;background:#fff;border:2px solid #dde2f7;border-radius:999px;padding:4px 12px;box-shadow:0 4px 12px rgba(90,100,170,.18)">⌂ 처음으로</a>
-</html>
+<a href="../#life-science" data-sync-home style="position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:2147483000;font-family:Jua,'Gowun Dodum',sans-serif;font-size:14px;text-decoration:none;color:#2b2f55;background:#fff;border:2px solid #dde2f7;border-radius:999px;padding:4px 12px;box-shadow:0 4px 12px rgba(90,100,170,.18)">⌂ 처음으로</a>
+</body></html>
