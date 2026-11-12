@@ -11,7 +11,7 @@
   --ink:#23263B; --muted:#5A6085; --line:#D5DBEE;
   --vessel:#E3476A; --vessel-lumen:#FCDDE4; --tube:#E6B02A; --tube-lumen:#FFF3CB;
   --c-filter:#3B78F2; --c-reab:#12996A; --c-secr:#E2641F; --on-stage:#FFFFFF; --warn:#D2364B;
-  --vein:#5468D4; --kid-1:#F4BDB2; --kid-2:#E38C82; --kid-edge:#C9675D;
+  --vein:#5468D4; --vein-lumen:#E1E6FA; --urea:#8A5A2B; --kid-1:#F3D5C8; --kid-2:#DDA897; --kid-edge:#B9786A;
   --f-display:"Jua","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --f-body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
 }
@@ -21,7 +21,7 @@
     --ink:#ECEFFC; --muted:#A5ABCB; --line:#30365A;
     --vessel:#FF6585; --vessel-lumen:#47202E; --tube:#EFC24A; --tube-lumen:#3A3117;
     --c-filter:#76A2FF; --c-reab:#43D29A; --c-secr:#FF9858; --on-stage:#11142A; --warn:#FF6E80;
-    --vein:#8C9DF5; --kid-1:#6A3A42; --kid-2:#8C4E57; --kid-edge:#B97680;
+    --vein:#8C9DF5; --vein-lumen:#262B4D; --urea:#D9A86C; --kid-1:#4B3436; --kid-2:#643F45; --kid-edge:#A0707A;
     color-scheme:dark;
   }
 }
@@ -30,7 +30,7 @@
   --ink:#ECEFFC; --muted:#A5ABCB; --line:#30365A;
   --vessel:#FF6585; --vessel-lumen:#47202E; --tube:#EFC24A; --tube-lumen:#3A3117;
   --c-filter:#76A2FF; --c-reab:#43D29A; --c-secr:#FF9858; --on-stage:#11142A; --warn:#FF6E80;
-    --vein:#8C9DF5; --kid-1:#6A3A42; --kid-2:#8C4E57; --kid-edge:#B97680;
+    --vein:#8C9DF5; --vein-lumen:#262B4D; --urea:#D9A86C; --kid-1:#4B3436; --kid-2:#643F45; --kid-edge:#A0707A;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -161,8 +161,28 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
 .k-pelvis{fill:var(--tube-lumen);stroke:var(--tube);stroke-width:3;stroke-linejoin:round}
 .k-ureter{fill:none;stroke:var(--tube);stroke-width:12;stroke-linecap:round}
 .k-ureter-in{fill:none;stroke:var(--tube-lumen);stroke-width:5;stroke-linecap:round}
-.k-art{fill:none;stroke:var(--vessel);stroke-width:8;stroke-linecap:round}
-.k-vein{fill:none;stroke:var(--vein);stroke-width:8;stroke-linecap:round}
+.k-art{fill:none;stroke:var(--vessel);stroke-width:11;stroke-linecap:round;stroke-linejoin:round}
+.k-art-in{fill:none;stroke:var(--vessel-lumen);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.k-vein{fill:none;stroke:var(--vein);stroke-width:11;stroke-linecap:round;stroke-linejoin:round}
+.k-vein-in{fill:none;stroke:var(--vein-lumen);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.k-art.tr,.k-vein.tr{stroke-width:9}
+.k-art-in.tr,.k-vein-in.tr{stroke-width:4.6}
+.k-art.br,.k-vein.br{stroke-width:7}
+.k-art-in.br,.k-vein-in.br{stroke-width:3.4}
+.k-chev{fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#flowLayer{pointer-events:none}
+.p-rbc{fill:var(--vessel)}
+.p-urea{fill:var(--urea)}
+.p-urine{fill:var(--tube);stroke:var(--ink);stroke-width:.7}
+.p-faint{opacity:.5}
+.flow-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:8px;padding:0 6px}
+.flow-btn{font-size:14px;padding:7px 11px}
+.lg{display:inline-flex;align-items:center;gap:5px;font-size:14px;color:var(--muted)}
+.lg .dot{display:block;width:10px;height:10px;border-radius:50%;border:1px solid transparent}
+.lg .bar{display:block;width:16px;height:6px;border-radius:3px}
+.flow-note{margin:6px 6px 0;font-size:14px;color:var(--muted)}
+.flow-note b{font-family:var(--f-display);font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums}
+.kid-text b.em{font-weight:400;font-family:var(--f-display);color:var(--ink)}
 .k-neph{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .k-glom{fill:var(--vessel);stroke:var(--ink);stroke-width:2}
 .k-lead{fill:none;stroke:var(--muted);stroke-width:1.5}
@@ -184,8 +204,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--c-filter);outli
 .kidney-card{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:center}
 @media (max-width:820px){.kidney-card{grid-template-columns:minmax(0,1fr)}}
 .kid-big{margin:0;overflow:hidden;border-radius:16px;background:var(--stage);padding:14px 8px 10px}
-.kid-big svg{display:block;width:100%;max-width:500px;height:auto;margin:0 auto;transition:transform .6s cubic-bezier(.55,0,.35,1),opacity .6s ease-in}
-.kid-big svg.zoom{transform:scale(6);opacity:0}
+#kidSvg{display:block;width:100%;max-width:500px;height:auto;margin:0 auto;transition:transform .6s cubic-bezier(.55,0,.35,1),opacity .6s ease-in}
+#kidSvg.zoom{transform:scale(6);opacity:0}
 .kid-big figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px}
 .kid-big figcaption b{font-family:var(--f-display);font-weight:400;color:var(--ink)}
 .kid-text{display:grid;gap:12px;min-width:0}
@@ -243,10 +263,8 @@ button.neph:hover{border-style:solid}
     <div class="card kidney-card">
       <figure class="kid-big">
         <svg id="kidSvg" viewBox="0 0 460 480" role="group" aria-labelledby="kidT">
-          <title id="kidT">배설계의 구조. 콩팥은 바깥쪽부터 콩팥겉질, 콩팥속질, 가장 안쪽의 빈 공간인 콩팥깔때기로 되어 있어요. 콩팥깔때기는 오줌관으로, 오줌관은 방광으로, 방광은 요도로 이어져요. 방광에는 반대쪽 콩팥에서 오는 오줌관도 연결돼 있어요. 콩팥 단위는 콩팥겉질과 콩팥속질에 걸쳐 있어요.</title>
+          <title id="kidT">배설계의 구조와 혈액의 흐름. 콩팥동맥으로 들어온 혈액은 콩팥 안에서 여러 갈래로 나뉘어 콩팥 단위를 지난 뒤 콩팥정맥으로 나가요. 콩팥은 바깥쪽부터 콩팥겉질, 콩팥속질, 가장 안쪽의 빈 공간인 콩팥깔때기로 되어 있고, 콩팥깔때기는 오줌관, 방광, 요도로 이어져요. 방광에는 반대쪽 콩팥에서 오는 오줌관도 연결돼 있어요.</title>
           <defs><clipPath id="bladClip"><path d="M262,372 C262,342 296,330 330,330 C364,330 398,342 398,372 C398,410 372,432 346,438 L314,438 C288,432 262,410 262,372 Z"/></clipPath></defs>
-          <path class="k-art" d="M294,118 C330,114 360,100 452,100"/>
-          <path class="k-vein" d="M294,129 C335,127 370,121 452,121"/>
           <path class="k-cortex" d="M220,20 C300,20 335,70 330,105 C326,125 300,125 300,140 C300,155 326,155 330,175 C335,210 300,260 220,260 C140,260 110,200 110,140 C110,80 140,20 220,20 Z"/>
           <path class="k-medulla" d="M220,58 C276,58 292,90 286,110 L278,140 L286,170 C292,192 276,222 220,222 C164,222 150,188 150,140 C150,92 164,58 220,58 Z"/>
           <path class="k-pelvis" d="M236,112 C246,116 252,126 262,130 L300,134 L300,146 L262,150 C252,154 246,164 236,168 C230,160 240,150 240,140 C240,130 230,120 236,112 Z"/>
@@ -261,12 +279,20 @@ button.neph:hover{border-style:solid}
           <path class="k-bladder-fill" d="M262,372 C262,342 296,330 330,330 C364,330 398,342 398,372 C398,410 372,432 346,438 L314,438 C288,432 262,410 262,372 Z"/>
           <rect class="k-urine" x="250" y="396" width="160" height="50" clip-path="url(#bladClip)"/>
           <path class="k-bladder-line" d="M262,372 C262,342 296,330 330,330 C364,330 398,342 398,372 C398,410 372,432 346,438 L314,438 C288,432 262,410 262,372 Z"/>
+          <path class="k-vein" d="M300,129 C335,127 370,121 452,121"/><path class="k-vein tr" d="M262,142 C276,136 288,131 300,129"/><path class="k-vein br" d="M126,126 C130,150 156,168 180,170 C210,172 238,160 262,142"/><path class="k-vein br" d="M202,232 C186,210 180,186 180,170"/><path class="k-vein br" d="M186,76 C196,74 208,76 222,82 C248,94 274,118 300,129"/>
+          <path class="k-vein-in" d="M300,129 C335,127 370,121 452,121"/><path class="k-vein-in tr" d="M262,142 C276,136 288,131 300,129"/><path class="k-vein-in br" d="M126,126 C130,150 156,168 180,170 C210,172 238,160 262,142"/><path class="k-vein-in br" d="M202,232 C186,210 180,186 180,170"/><path class="k-vein-in br" d="M186,76 C196,74 208,76 222,82 C248,94 274,118 300,129"/>
+          <path class="k-art" d="M452,100 C360,100 330,114 300,119"/><path class="k-art tr" d="M300,119 C284,121 270,126 258,134"/><path class="k-art br" d="M300,119 C276,108 252,84 222,72 C206,66 194,64 184,66"/><path class="k-art br" d="M258,134 C236,148 212,158 190,158 C168,158 140,148 131,125"/><path class="k-art br" d="M190,158 C190,182 196,206 212,230"/>
+          <path class="k-art-in" d="M452,100 C360,100 330,114 300,119"/><path class="k-art-in tr" d="M300,119 C284,121 270,126 258,134"/><path class="k-art-in br" d="M300,119 C276,108 252,84 222,72 C206,66 194,64 184,66"/><path class="k-art-in br" d="M258,134 C236,148 212,158 190,158 C168,158 140,148 131,125"/><path class="k-art-in br" d="M190,158 C190,182 196,206 212,230"/>
+          <polyline class="k-chev" style="stroke:var(--vessel)" points="425,97 421,100.5 425,104"/>
+          <polyline class="k-chev" style="stroke:var(--vessel)" points="396,98.4 392,101.9 396,105.4"/>
+          <polyline class="k-chev" style="stroke:var(--vein)" points="416,118 420,121.5 416,125"/>
+          <polyline class="k-chev" style="stroke:var(--vein)" points="388,118.8 392,122.3 388,125.8"/>
           <path class="k-lead" d="M78,170 L130,170"/>
-          <path class="k-lead" d="M78,228 L186,196"/>
-          <path class="k-lead" d="M258,152 L258,274"/>
+          <path class="k-lead" d="M78,228 L170,202"/>
+          <path class="k-lead" d="M252,274 L250,162"/>
           <text class="k-lbl" x="8" y="176">콩팥겉질</text>
           <text class="k-lbl" x="8" y="234">콩팥속질</text>
-          <text class="k-lbl" x="258" y="292" text-anchor="middle">콩팥깔때기</text>
+          <text class="k-lbl" x="252" y="292" text-anchor="middle">콩팥깔때기</text>
           <text class="k-lbl" x="334" y="272" text-anchor="end">오줌관</text>
           <text class="k-lbl" x="452" y="88" text-anchor="end">콩팥동맥</text>
           <text class="k-lbl" x="452" y="148" text-anchor="end">콩팥정맥</text>
@@ -283,12 +309,24 @@ button.neph:hover{border-style:solid}
             <rect class="k-hit-r" x="0" y="28" width="92" height="34"/>
             <path class="k-hit" d="M136,118 C141,110 145,126 150,118 L210,140 Q216,136 208,133 L158,102 C152,98 156,90 162,92 C168,94 166,86 170,86 L234,110"/>
           </g>
+          <g id="flowLayer"></g>
         </svg>
+        <div class="flow-bar">
+          <button class="btn flow-btn" type="button" id="flowBtn" aria-pressed="true"></button>
+          <span class="lg"><i class="bar" style="background:var(--vessel)"></i>동맥</span>
+          <span class="lg"><i class="bar" style="background:var(--vein)"></i>정맥</span>
+          <span class="lg"><i class="dot" style="background:var(--vessel)"></i>적혈구</span>
+          <span class="lg"><i class="dot" style="background:var(--urea)"></i>요소</span>
+          <span class="lg"><i class="dot" style="background:var(--tube);border-color:var(--ink)"></i>오줌</span>
+        </div>
+        <p class="flow-note" aria-live="off">콩팥 단위에 도착한 요소 <b id="uIn">0</b>개 중 <b id="uUr">0</b>개는 오줌으로, <b id="uVe">0</b>개는 콩팥정맥으로 갔어요.</p>
         <figcaption>반짝이는 <b>콩팥 단위</b>를 누르면 그 안을 크게 볼 수 있어요.</figcaption>
       </figure>
       <div class="kid-text">
         <h2>배설계의 구조</h2>
         <p>배설계는 콩팥, 오줌관, 방광, 요도로 이루어져 있어요. 콩팥은 강낭콩 모양으로 등허리 쪽에 좌우 한 쌍이 있고, 혈액 속 노폐물을 걸러 오줌을 만들어요.</p>
+        <h3 class="parts-h">혈액의 흐름</h3>
+        <p>혈액은 콩팥동맥으로 들어와 콩팥 안에서 여러 갈래로 나뉘고, 콩팥 단위를 지나며 걸러진 뒤 콩팥정맥으로 나가요. 걸러진 요소는 오줌에 섞여 나가므로 <b class="em">콩팥정맥의 혈액에는 콩팥동맥보다 요소가 적어요.</b></p>
         <h3 class="parts-h">콩팥</h3>
         <ul class="parts">
           <li><i class="sw" style="background:var(--kid-1)"></i><b>콩팥겉질</b><span>콩팥의 바깥 부분</span></li>
@@ -1107,6 +1145,104 @@ function frame(now){
   if(running)update(dtReal*speed);
   draw(now/1000,dtReal);
   updateDom(false);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+
+<script>
+(function(){
+'use strict';
+const svg=document.getElementById('kidSvg'),layer=document.getElementById('flowLayer');
+const view=document.getElementById('kidneyView'),btn=document.getElementById('flowBtn');
+if(!svg||!layer)return;
+const NS='http://www.w3.org/2000/svg';
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const D={"ART": "M452,100 C360,100 330,114 300,119", "VEIN": "M300,129 C335,127 370,121 452,121", "A0": "M300,119 C284,121 270,126 258,134", "VT": "M262,142 C276,136 288,131 300,129", "A1": "M258,134 C236,148 212,158 190,158 C168,158 140,148 131,125", "A1A": "M258,134 C236,148 212,158 190,158", "V1A": "M126,126 C130,150 156,168 180,170", "V1B": "M180,170 C210,172 238,160 262,142", "A2": "M190,158 C190,182 196,206 212,230", "V2": "M202,232 C186,210 180,186 180,170", "A3": "M300,119 C276,108 252,84 222,72 C206,66 194,64 184,66", "V3": "M186,76 C196,74 208,76 222,82 C248,94 274,118 300,129", "NEPH": "M136,118 C141,110 145,126 150,118 L210,140 Q216,136 208,133 L158,102 C152,98 156,90 162,92 C168,94 166,86 170,86 L234,110", "CONN": "M234,110 C246,118 262,134 288,140", "URE": "M288,140 C345,140 352,172 352,240 C352,290 336,318 318,352", "OTHER": "M462,262 C430,290 372,316 344,350"};
+function parse(d){
+  const tk=d.match(/[MLCQZ]|-?\d*\.?\d+/g);let i=0,cmd='M',cx=0,cy=0;const pts=[];
+  while(i<tk.length){
+    if(/^[MLCQZ]$/.test(tk[i]))cmd=tk[i++];
+    if(cmd==='M'){cx=+tk[i++];cy=+tk[i++];pts.push([cx,cy]);cmd='L';}
+    else if(cmd==='L'){cx=+tk[i++];cy=+tk[i++];pts.push([cx,cy]);}
+    else if(cmd==='C'){const a=+tk[i++],b=+tk[i++],c=+tk[i++],e=+tk[i++],x=+tk[i++],y=+tk[i++];
+      for(let k=1;k<=20;k++){const t=k/20,u=1-t;pts.push([u*u*u*cx+3*u*u*t*a+3*u*t*t*c+t*t*t*x,u*u*u*cy+3*u*u*t*b+3*u*t*t*e+t*t*t*y]);}cx=x;cy=y;}
+    else if(cmd==='Q'){const a=+tk[i++],b=+tk[i++],x=+tk[i++],y=+tk[i++];
+      for(let k=1;k<=12;k++){const t=k/12,u=1-t;pts.push([u*u*cx+2*u*t*a+t*t*x,u*u*cy+2*u*t*b+t*t*y]);}cx=x;cy=y;}
+    else i++;
+  }
+  return pts;
+}
+function route(){
+  let pts=[];for(let a=0;a<arguments.length;a++)pts=pts.concat(parse(D[arguments[a]]));
+  const cum=[0];for(let i=1;i<pts.length;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+  return {pts:pts,cum:cum,len:cum[cum.length-1]};
+}
+function pos(r,s){
+  if(s<=0)return r.pts[0]; if(s>=r.len)return r.pts[r.pts.length-1];
+  let lo=0,hi=r.cum.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(r.cum[m]<s)lo=m;else hi=m;}
+  const t=(s-r.cum[lo])/((r.cum[hi]-r.cum[lo])||1),a=r.pts[lo],b=r.pts[hi];
+  return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
+}
+const R={
+  in1:route('ART','A0','A1'), out1:route('V1A','V1B','VT','VEIN'),
+  in2:route('ART','A3'), out2:route('V3','VEIN'),
+  in3:route('ART','A0','A1A','A2'), out3:route('V2','V1B','VT','VEIN'),
+  urine:route('NEPH','CONN','URE'), other:route('OTHER')
+};
+const NEXT={in1:'out1',in2:'out2',in3:'out3'};
+let parts=[],acc=0,accO=0,running=!reduce,cnt={uIn:0,uUr:0,uVe:0};
+const out={uIn:document.getElementById('uIn'),uUr:document.getElementById('uUr'),uVe:document.getElementById('uVe')};
+function add(kind,key,faint){
+  const el=document.createElementNS(NS,'circle');
+  el.setAttribute('r',kind==='urine'?2.5:kind==='urea'?2.2:2.1);
+  el.setAttribute('class','p-'+kind+(faint?' p-faint':''));
+  layer.appendChild(el);
+  const p={kind:kind,key:key,r:R[key],s:0,v:(kind==='urine'?28:52)*(0.85+Math.random()*0.3),el:el};
+  parts.push(p);return p;
+}
+function spawnBlood(){
+  if(parts.length>260)return;
+  if(Math.random()<0.24){add('urea','in1');return;}
+  const r=Math.random();add('rbc',r<0.4?'in1':r<0.7?'in2':'in3');
+}
+function retire(p){p.dead=true;p.el.remove();}
+function switchTo(p,key){p.key=key;p.r=R[key];p.s=0;}
+function update(dt){
+  acc+=dt;while(acc>=0.13){acc-=0.13;spawnBlood();}
+  accO+=dt;while(accO>=0.9){accO-=0.9;add('urine','other',true);}
+  for(let i=0;i<parts.length;i++){
+    const p=parts[i];p.s+=p.v*dt;
+    if(p.s<p.r.len)continue;
+    if(p.key==='in1'){
+      if(p.kind==='urea'){
+        cnt.uIn++;
+        if(Math.random()<0.6){cnt.uUr++;switchTo(p,'urine');p.v=28*(0.85+Math.random()*0.3);}
+        else{cnt.uVe++;switchTo(p,'out1');}
+      }else{
+        switchTo(p,'out1');
+        if(Math.random()<0.35)add('urine','urine');
+      }
+    }else if(NEXT[p.key])switchTo(p,NEXT[p.key]);
+    else retire(p);
+  }
+  parts=parts.filter(function(p){return !p.dead;});
+}
+function render(){
+  for(let i=0;i<parts.length;i++){const p=parts[i],q=pos(p.r,p.s);p.el.setAttribute('cx',q[0].toFixed(1));p.el.setAttribute('cy',q[1].toFixed(1));}
+  for(const k in out){const v=String(cnt[k]);if(out[k]&&out[k].textContent!==v)out[k].textContent=v;}
+}
+const IC_PAUSE='<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/></svg>';
+const IC_PLAY='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.6v10.8a.6.6 0 0 0 .9.5l8.6-5.4a.6.6 0 0 0 0-1L4.9 2.1a.6.6 0 0 0-.9.5z" fill="currentColor"/></svg>';
+function renderBtn(){if(!btn)return;btn.innerHTML=running?IC_PAUSE+'흐름 멈추기':IC_PLAY+'혈액 흐름 보기';btn.setAttribute('aria-pressed',String(running));}
+if(btn)btn.addEventListener('click',function(){running=!running;renderBtn();});
+for(let t=0;t<18;t+=1/30)update(1/30);
+render();renderBtn();
+let last=performance.now();
+function frame(now){
+  const dt=Math.min(0.05,(now-last)/1000);last=now;
+  if(running&&!(view&&view.hidden)&&!document.hidden){update(dt);render();}
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
