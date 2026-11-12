@@ -2,44 +2,12 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>지구과학 시뮬레이션 모음</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
-<style>
-:root{--bg1:#dbe4ff;--bg2:#f4ebff;--ink:#2b2f55;--muted:#6b7099;--line:#dde2f7;--pink:#ff6f91;
-  --display:"Jua","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;--body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;color-scheme:light}
-*{box-sizing:border-box}
-html,body{background-color:var(--bg1);color:var(--ink);margin:0}
-body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg opacity='.45'%3E%3Cpath transform='translate(30 26)' d='M18 2a15 15 0 1 0 12 25 12 12 0 0 1-12-25z' fill='%23ffe08a'/%3E%3Cg transform='translate(182 150)'%3E%3Ccircle r='12' fill='%23cdbbff'/%3E%3Cellipse rx='22' ry='5.5' transform='rotate(-20)' fill='none' stroke='%23a891f0' stroke-width='2.2'/%3E%3C/g%3E%3Cg transform='translate(78 186)'%3E%3Ccircle r='11' fill='%23a9c2ff'/%3E%3Cpath d='M-7-4c2-3 6-3 7 0s-2 4-4 4-4 0-3-4zM2 4c2-1 5 0 5 2s-3 3-5 2-1-3 0-4z' fill='%238fd8a6'/%3E%3C/g%3E%3Cellipse cx='78' cy='186' rx='30' ry='12' fill='none' stroke='%23b9c8f5' stroke-width='1.6' stroke-dasharray='3 5'/%3E%3Cpath transform='translate(150 40)' d='M0 -9Q1.6199999999999999 -1.6199999999999999 9 0Q1.6199999999999999 1.6199999999999999 0 9Q-1.6199999999999999 1.6199999999999999 -9 0Q-1.6199999999999999 -1.6199999999999999 0 -9z' fill='%23ffd166'/%3E%3Cpath transform='translate(226 84)' d='M0 -6Q1.08 -1.08 6 0Q1.08 1.08 0 6Q-1.08 1.08 -6 0Q-1.08 -1.08 0 -6z' fill='%23ff9ebb'/%3E%3Cpath transform='translate(120 112)' d='M0 -5Q0.8999999999999999 -0.8999999999999999 5 0Q0.8999999999999999 0.8999999999999999 0 5Q-0.8999999999999999 0.8999999999999999 -5 0Q-0.8999999999999999 -0.8999999999999999 0 -5z' fill='%239bb8ff'/%3E%3Cpath transform='translate(30 128)' d='M0 -7Q1.26 -1.26 7 0Q1.26 1.26 0 7Q-1.26 1.26 -7 0Q-1.26 -1.26 0 -7z' fill='%23ffd166'/%3E%3Cpath transform='translate(232 232)' d='M0 -8Q1.44 -1.44 8 0Q1.44 1.44 0 8Q-1.44 1.44 -8 0Q-1.44 -1.44 0 -8z' fill='%239bb8ff'/%3E%3Ccircle cx='200' cy='26' r='2' fill='%239bb8ff'/%3E%3Ccircle cx='70' cy='92' r='1.8' fill='%23ff9ebb'/%3E%3Ccircle cx='150' cy='224' r='2.2' fill='%23ffd166'/%3E%3Ccircle cx='12' cy='220' r='1.8' fill='%239bb8ff'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(180deg,var(--bg1),var(--bg2));
-  min-height:100vh;font-family:var(--body);font-size:16px;line-height:1.6;padding:32px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
-.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
-header{display:flex;gap:14px;align-items:center}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,46px);margin:0;line-height:1.15;word-break:keep-all}
-header p{margin:2px 0 0;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;max-width:760px}
-a.card{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 8px 24px rgba(90,100,170,.10);transition:transform .15s,box-shadow .15s}
-a.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(90,100,170,.18)}
-a.card:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-.card h2{font-family:var(--display);font-weight:400;font-size:24px;margin:0}
-.card p{margin:0;color:var(--muted);font-size:15px}
-.go{margin-top:auto;align-self:flex-start;font-family:var(--display);color:#fff;background:var(--pink);border-radius:999px;padding:4px 14px}
-.ico{width:56px;height:56px}
-.up{align-self:flex-start;font-family:var(--display);text-decoration:none;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:999px;padding:4px 14px}
-.up:hover{border-color:var(--pink)}
-.up:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-@media (prefers-reduced-motion:reduce){a.card{transition:none}}
-</style>
-<div class="wrap">
-  <a class="up" href="../">← 과목 고르기</a>
-  <header>
-    <svg class="ico" viewBox="0 0 36 36" aria-hidden="true"><circle cx="14" cy="21" r="10" fill="#9bb8ff" stroke="#2b2f55" stroke-width="1.6"/><path d="M6.5 18.5C7 16 9 14.5 11 15 12.5 15.4 12 17 10.5 17.5 9 18 8.5 20 7 19.8z" fill="#7fd39b" stroke="#2b2f55" stroke-width="1.1" stroke-linejoin="round"/><path d="M17 26C19 24.5 21.5 25 22 26.5 22 28 20.5 29.5 19 29.2 17.5 28.8 16 27.5 17 26z" fill="#7fd39b" stroke="#2b2f55" stroke-width="1.1" stroke-linejoin="round"/><circle cx="12" cy="21" r="1.2" fill="#2b2f55"/><circle cx="17" cy="21" r="1.2" fill="#2b2f55"/><path d="M12.5 24q2 1.8 4 0" fill="none" stroke="#2b2f55" stroke-width="1.3" stroke-linecap="round"/><path d="M27 2.5 28.76 7.07 33.66 7.34 29.85 10.43 31.11 15.16 27 12.5 22.89 15.16 24.15 10.43 20.34 7.34 25.24 7.07z" fill="#ffd166" stroke="#2b2f55" stroke-width="1.3" stroke-linejoin="round"/><circle cx="30.5" cy="22" r="1.1" fill="#ffd166"/></svg>
-    <div><h1>지구과학 시뮬레이션 모음</h1><p>보고 싶은 자료를 골라 눌러 보세요.</p></div>
-  </header>
-  <div class="grid">
-    <a class="card" href="diurnal.html"><h2>천체의 일주운동</h2><p>지구를 가운데 둔 천구 모형을 돌리고 확대해 보며 위도와 계절에 따른 별과 태양의 하루 움직임을 살펴봐요.</p><span class="go">열기 →</span></a>
-    <a class="card" href="sun-annual.html"><h2>태양의 연주운동</h2><p>3D 공전 모형과 황도 12궁 별자리 띠로 태양이 별자리 사이를 옮겨 가는 모습과 계절별 밤하늘을 확인해요.</p><span class="go">열기 →</span></a>
-    <a class="card" href="moon-phases.html"><h2>달의 위상 변화 관찰</h2><p>달을 끌어 지구 둘레를 돌리며 햇빛을 받는 쪽과 지구에서 보이는 쪽에 따라 달 모양이 바뀌는 까닭을 살펴보고, 하늘에서 달이 보이는 방향과 시각을 찾아봐요.</p><span class="go">열기 →</span></a>
-  </div>
-</div>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지구과학</title>
+<meta http-equiv="refresh" content="0; url=../#earth-science">
+<script>location.replace("../#earth-science");</script>
+</head>
+<body style="font-family:sans-serif;padding:24px">
+<p><a href="../#earth-science">지구과학 시뮬레이션 보러 가기</a></p>
+</body>
 </html>
