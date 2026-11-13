@@ -21,16 +21,3 @@
 `sync/build.py`가 원본을 사이트 파일로 옮깁니다(원본은 그대로 두고 `lang="ko"`와 '⌂ 처음으로' 버튼만 더함).
 원본의 제목이 바뀌면 이 사이트 첫 화면과 메인페이지(dajihoya/NOHclass)의 카드 제목도 함께 바뀝니다.
 예약 작업이 주기적으로 원본을 확인해 바뀐 것만 올립니다.
-
-## 주제별·학년별 보기 (인덱스 플래그)
-
-첫 화면 위쪽의 '주제별 보기 / 학년별 보기'와 색깔 플래그로 시뮬레이션을 골라 봅니다.
-
-- 주제: 물리(빨강) `#physics`, 화학(노랑) `#chemistry`, 생명과학(초록) `#life-science`, 지구과학(파랑) `#earth-science`
-- 학년: 1학년(빨강) `#grade-1`, 2학년(노랑) `#grade-2`, 3학년(초록) `#grade-3`
-- 주소 끝에 위 표시를 붙이면 그 분류만 보입니다. 예: `dajihoya.github.io/scienceclass/#grade-2`
-
-시뮬레이션을 추가할 때는 `index.html`의 `<div id="pool">` 안에 카드를 넣고 두 속성을 꼭 붙입니다.
-
-- `data-topic`: `physics`, `chemistry`, `life-science`, `earth-science` 중 하나
-- `data-grade`: 학년 숫자. 여러 학년이면 띄어 씁니다. 예: `data-grade="2 3"`
