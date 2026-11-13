@@ -37,8 +37,30 @@ h1 .by{font-size:.46em;color:#FFE08A;white-space:nowrap;margin-left:.15em}
 header p{margin:4px 0 0;color:var(--chalk-dim);word-break:keep-all}
 
 /* 과목 줄 */
-.row{--c:var(--life);--deep:var(--life-deep);--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath d='M12 31V18' stroke='%23A8ADB8' stroke-width='1.7' stroke-linecap='round'/%3E%3Cellipse cx='12' cy='17' rx='8.5' ry='3.1' fill='%23DB5279'/%3E%3Cpath d='M7.6 5.6h8.8l-1.7 10h-5.4z' fill='%23FF8FAB'/%3E%3Cellipse cx='12' cy='5.6' rx='6.2' ry='3.3' fill='%23FFC9D6'/%3E%3Cellipse cx='12' cy='5.2' rx='4.2' ry='1.8' fill='%23FF8FAB' opacity='.35'/%3E%3Cpath d='M9.6 8l-.7 6' stroke='%23fff' stroke-opacity='.65' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E")}
-.row.earth{--c:var(--earth);--deep:var(--earth-deep);--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath d='M12 31V18' stroke='%23A8ADB8' stroke-width='1.7' stroke-linecap='round'/%3E%3Cellipse cx='12' cy='17' rx='8.5' ry='3.1' fill='%234A7CDD'/%3E%3Cpath d='M7.6 5.6h8.8l-1.7 10h-5.4z' fill='%238DB8FF'/%3E%3Cellipse cx='12' cy='5.6' rx='6.2' ry='3.3' fill='%23CFE0FF'/%3E%3Cellipse cx='12' cy='5.2' rx='4.2' ry='1.8' fill='%238DB8FF' opacity='.35'/%3E%3Cpath d='M9.6 8l-.7 6' stroke='%23fff' stroke-opacity='.65' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E")}
+[hidden]{display:none!important}
+/* 분류 색: 빨·노·초·파 */
+.cat-red{--c:#FF8A8F}.cat-yellow{--c:#FFD25E}.cat-green{--c:#7FDCA8}.cat-blue{--c:#9CC4FF}
+.row h2 .badge.num{font-family:var(--display);font-size:22px;color:#2F4B3C;background:var(--c)}
+.empty{margin:0;color:var(--chalk-dim);font-size:15px;border:2px dashed rgba(244,241,230,.25);border-radius:10px;padding:14px 16px}
+
+/* 보기 방식 + 인덱스 플래그 */
+.views{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 24px}
+.modes{display:inline-flex;gap:4px;border:2px solid rgba(244,241,230,.35);border-radius:999px;padding:4px;background:rgba(255,255,255,.06)}
+.mode{font-family:var(--display);font-size:18px;color:var(--chalk);text-decoration:none;padding:6px 16px;border-radius:999px;line-height:1.3}
+.mode[aria-current="true"]{background:var(--chalk);color:#2F4B3C}
+.mode:focus-visible,.flag:focus-visible{outline:3px solid #FFE08A;outline-offset:3px}
+.flags{display:flex;flex-wrap:wrap;gap:12px 10px;padding-top:4px}
+.flag{--tip:#E5484D;--body:#FFD6D7;--ink:#7A1F22;position:relative;display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 15px 0 22px;
+  font-family:var(--display);font-size:18px;color:var(--ink);text-decoration:none;background:linear-gradient(90deg,var(--tip) 0 11px,var(--body) 11px);
+  border-radius:2px 8px 8px 2px;box-shadow:0 3px 8px rgba(0,0,0,.28);opacity:.82;transform:translateY(5px) rotate(-1.2deg);transition:transform .15s,box-shadow .15s,opacity .15s}
+.flag:nth-child(even){transform:translateY(5px) rotate(1deg)}
+.flag.yellow{--tip:#F2B705;--body:#FFF0B3;--ink:#6B5200}
+.flag.green{--tip:#2FA36B;--body:#CFEFD9;--ink:#135C3A}
+.flag.blue{--tip:#3B82F6;--body:#D6E6FF;--ink:#1E40AF}
+.flag:hover{opacity:1;transform:translateY(1px) rotate(0)}
+.flag[aria-current="true"]{opacity:1;transform:translateY(-4px) rotate(0);box-shadow:0 9px 16px rgba(0,0,0,.38)}
+.flag .n{font-size:13px;line-height:20px;padding:0 7px;border-radius:999px;background:rgba(255,255,255,.75)}
+#view{display:flex;flex-direction:column;gap:30px}
 .row h2{display:flex;align-items:center;gap:10px;margin:0 0 16px;font-family:var(--display);font-weight:400;font-size:28px;line-height:1.2;color:var(--chalk)}
 .row h2 .badge{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.1);display:grid;place-items:center;flex:none}
 .row h2 .badge svg{width:28px;height:28px}
@@ -53,12 +75,15 @@ a.note::before{content:"";position:absolute;top:-17px;left:50%;width:22px;height
   transform:rotate(16deg);transform-origin:50% 90%;filter:drop-shadow(2px 3px 2px rgba(0,0,0,.35));pointer-events:none}
 a.note:hover{transform:translateY(-3px) rotate(-.6deg);box-shadow:0 12px 24px rgba(0,0,0,.34)}
 a.note:focus-visible{outline:3px solid #FFE08A;outline-offset:3px}
+a.note{--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath d='M12 31V18' stroke='%23A8ADB8' stroke-width='1.7' stroke-linecap='round'/%3E%3Cellipse cx='12' cy='17' rx='8.5' ry='3.1' fill='%23C8463A'/%3E%3Cpath d='M7.6 5.6h8.8l-1.7 10h-5.4z' fill='%23F2685A'/%3E%3Cellipse cx='12' cy='5.6' rx='6.2' ry='3.3' fill='%23FFB4A8'/%3E%3Cellipse cx='12' cy='5.2' rx='4.2' ry='1.8' fill='%23F2685A' opacity='.35'/%3E%3Cpath d='M9.6 8l-.7 6' stroke='%23fff' stroke-opacity='.65' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E")}
+a.note[data-topic="chemistry"]{--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath d='M12 31V18' stroke='%23A8ADB8' stroke-width='1.7' stroke-linecap='round'/%3E%3Cellipse cx='12' cy='17' rx='8.5' ry='3.1' fill='%23D99A1E'/%3E%3Cpath d='M7.6 5.6h8.8l-1.7 10h-5.4z' fill='%23FFC94D'/%3E%3Cellipse cx='12' cy='5.6' rx='6.2' ry='3.3' fill='%23FFE9A6'/%3E%3Cellipse cx='12' cy='5.2' rx='4.2' ry='1.8' fill='%23FFC94D' opacity='.35'/%3E%3Cpath d='M9.6 8l-.7 6' stroke='%23fff' stroke-opacity='.65' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E")}
+a.note[data-topic="life-science"]{--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath d='M12 31V18' stroke='%23A8ADB8' stroke-width='1.7' stroke-linecap='round'/%3E%3Cellipse cx='12' cy='17' rx='8.5' ry='3.1' fill='%2322935D'/%3E%3Cpath d='M7.6 5.6h8.8l-1.7 10h-5.4z' fill='%234CC28A'/%3E%3Cellipse cx='12' cy='5.6' rx='6.2' ry='3.3' fill='%23BFF0D2'/%3E%3Cellipse cx='12' cy='5.2' rx='4.2' ry='1.8' fill='%234CC28A' opacity='.35'/%3E%3Cpath d='M9.6 8l-.7 6' stroke='%23fff' stroke-opacity='.65' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E")}
+a.note[data-topic="earth-science"]{--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath d='M12 31V18' stroke='%23A8ADB8' stroke-width='1.7' stroke-linecap='round'/%3E%3Cellipse cx='12' cy='17' rx='8.5' ry='3.1' fill='%234A7CDD'/%3E%3Cpath d='M7.6 5.6h8.8l-1.7 10h-5.4z' fill='%238DB8FF'/%3E%3Cellipse cx='12' cy='5.6' rx='6.2' ry='3.3' fill='%23CFE0FF'/%3E%3Cellipse cx='12' cy='5.2' rx='4.2' ry='1.8' fill='%238DB8FF' opacity='.35'/%3E%3Cpath d='M9.6 8l-.7 6' stroke='%23fff' stroke-opacity='.65' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E")}
 .hd{display:flex;align-items:center;gap:10px}
 .pic{flex:none;width:40px;height:40px;border-radius:11px;background:var(--bsoft,#F3F4F6);display:grid;place-items:center}
 .pic svg{width:27px;height:27px}
 a.note b{font-family:var(--display);font-weight:400;font-size:18px;line-height:1.25;word-break:keep-all}
 a.note span.d{font-size:13.5px;color:var(--muted);line-height:1.5;word-break:keep-all}
-a.note .go{margin-top:auto;padding-top:4px;font-family:var(--display);font-size:15px;color:var(--deep)}
 
 /* 분필 받침 */
 .tray{position:relative;height:16px;margin-top:6px;border-radius:4px;background:linear-gradient(#9C6A43,#6E4527);box-shadow:0 4px 8px rgba(0,0,0,.3)}
@@ -96,44 +121,125 @@ a.note .go{margin-top:auto;padding-top:4px;font-family:var(--display);font-size:
       <circle cx="26" cy="47" r="2" fill="#2b2f55"/><circle cx="38" cy="47" r="2" fill="#2b2f55"/>
       <path d="M27.5 51.5q4.5 4 9 0" fill="none" stroke="#2b2f55" stroke-width="2" stroke-linecap="round"/>
     </svg>
-    <div><h1>Science Class <small class="by">by Teacher 노글라쓰</small></h1><p>보고 싶은 시뮬레이션을 골라 열어 보세요.</p></div>
+    <div><h1>Science Class <small class="by">by Teacher 노글라쓰</small></h1><p>색깔 플래그를 눌러 주제별·학년별로 골라 보세요.</p></div>
   </header>
 
-  <!-- 생명과학 -->
-  <section class="row" id="life-science" aria-labelledby="hLife">
-    <h2 id="hLife"><span class="badge" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M18 31C10 25 5 20.5 5 14.5 5 10.5 8 7.5 12 7.5c2.6 0 4.7 1.4 6 3.5 1.3-2.1 3.4-3.5 6-3.5 4 0 7 3 7 7 0 6-5 10.5-13 16.5z" fill="#ff7a96" stroke="#2b2f55" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 15.5q0-3.5 3.5-4.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".9"/></svg></span>생명과학<span class="count">1</span><span class="line" aria-hidden="true"></span></h2>
-    <div class="notes">
-      <a class="note" href="life-science/nephron.html">
+  <nav class="views" aria-label="시뮬레이션 분류">
+    <div class="modes">
+      <a class="mode" href="#topic" data-mode="topic">주제별 보기</a>
+      <a class="mode" href="#grade" data-mode="grade">학년별 보기</a>
+    </div>
+    <div class="flags" data-mode="topic">
+      <a class="flag red" href="#physics">물리</a>
+      <a class="flag yellow" href="#chemistry">화학</a>
+      <a class="flag green" href="#life-science">생명과학</a>
+      <a class="flag blue" href="#earth-science">지구과학</a>
+    </div>
+    <div class="flags" data-mode="grade">
+      <a class="flag red" href="#grade-1">1학년</a>
+      <a class="flag yellow" href="#grade-2">2학년</a>
+      <a class="flag green" href="#grade-3">3학년</a>
+    </div>
+  </nav>
+
+  <div id="view"></div>
+
+  <!-- 모든 시뮬레이션: data-topic(주제)과 data-grade(학년, 여러 개면 띄어 쓰기)로 분류 -->
+  <div id="pool" class="notes">
+      <a class="note" data-topic="life-science" data-grade="2" href="life-science/nephron.html">
         <span class="hd"><span class="pic" style="--bsoft:#FFF1F4" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M38 6c11 0 20 10 20 25S50 58 38 58c-9 0-13-6-13-12 0-5 4-7 4-14s-4-9-4-14C25 11 29 6 38 6z" fill="#E3476A"/><path d="M24 30c-6 0-10 2-12 6" stroke="#E6B02A" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="37" cy="27" r="3" fill="#2A2140"/><circle cx="48" cy="27" r="3" fill="#2A2140"/><path d="M38 34q5 5 10 0" stroke="#2A2140" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="33" cy="33" r="2.6" fill="#FFB3C4"/><circle cx="52" cy="33" r="2.6" fill="#FFB3C4"/></svg></span><b data-sync="nephron">콩팥의 구조와 기능</b></span>
         <span class="d">콩팥의 구조를 살펴보고, 콩팥 단위에서 오줌이 만들어지는 과정을 따라가요.</span>
       </a>
-    </div>
-  </section>
-
-  <!-- 지구과학 -->
-  <section class="row earth" id="earth-science" aria-labelledby="hEarth">
-    <h2 id="hEarth"><span class="badge" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="14" cy="21" r="10" fill="#9bb8ff" stroke="#2b2f55" stroke-width="2"/><path d="M8.5 16.5C10 14 13.5 13.5 15 15.5 16 17 14.5 18.5 15.5 20 16.5 21.5 14 23.5 12.5 22.5 11 21.5 10.5 20 9 20 7.5 20 7.5 18 8.5 16.5z" fill="#7fd39b" stroke="#2b2f55" stroke-width="1.4" stroke-linejoin="round"/><path d="M17 25C19 23.5 21.5 24 22 25.5 22.5 27 21 29 19.5 28.5 18 28 16 26.5 17 25z" fill="#7fd39b" stroke="#2b2f55" stroke-width="1.4" stroke-linejoin="round"/><path d="M27 2.5 28.76 7.07 33.66 7.34 29.85 10.43 31.11 15.16 27 12.5 22.89 15.16 24.15 10.43 20.34 7.34 25.24 7.07z" fill="#ffd166" stroke="#2b2f55" stroke-width="1.6" stroke-linejoin="round"/></svg></span>지구과학<span class="count">4</span><span class="line" aria-hidden="true"></span></h2>
-    <div class="notes">
-      <a class="note" href="earth-science/diurnal.html">
+      <a class="note" data-topic="earth-science" data-grade="2" href="earth-science/diurnal.html">
         <span class="hd"><span class="pic" style="--bsoft:#EEF2FF" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 26a11 11 0 0 1 22 0M9 26a7 7 0 0 1 14 0" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3"/><path d="M16 5l1.6 3.4 3.7.4-2.8 2.5.8 3.7-3.3-1.9-3.3 1.9.8-3.7-2.8-2.5 3.7-.4z" fill="#FBBF24" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"/><path d="M3 26h26" stroke="#4B5563" stroke-width="1.8" stroke-linecap="round"/></svg></span><b data-sync="diurnal">천체의 일주운동</b></span>
         <span class="d">천구 모형을 돌리며 별과 태양의 하루 움직임을 살펴봐요.</span>
       </a>
-      <a class="note" href="earth-science/sun-annual.html">
+      <a class="note" data-topic="earth-science" data-grade="2" href="earth-science/sun-annual.html">
         <span class="hd"><span class="pic" style="--bsoft:#FFF7ED" aria-hidden="true"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="17" rx="13" ry="6" fill="none" stroke="#9CA3AF" stroke-width="1.6" stroke-dasharray="3 3"/><circle cx="16" cy="17" r="5" fill="#FB923C" stroke="#9A3412" stroke-width="1.4"/><circle cx="27.5" cy="14" r="2.6" fill="#60A5FA" stroke="#1E3A8A" stroke-width="1.2"/></svg></span><b data-sync="sun-annual">태양의 연주운동</b></span>
         <span class="d">공전 모형과 황도 12궁으로 태양이 별자리 사이를 옮겨 가는 모습을 봐요.</span>
       </a>
-      <a class="note" href="earth-science/moon-phases.html">
+      <a class="note" data-topic="earth-science" data-grade="2" href="earth-science/moon-phases.html">
         <span class="hd"><span class="pic" style="--bsoft:#1E2650" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M19 5a11 11 0 1 0 8 18 9 9 0 0 1-8-18z" fill="#FFE49A"/><circle cx="25" cy="8" r="1.2" fill="#fff"/><circle cx="8" cy="9" r="1" fill="#fff" opacity=".7"/></svg></span><b data-sync="moon-phases">달의 위상 변화 관찰</b></span>
         <span class="d">달을 돌리며 모양이 바뀌는 까닭과 보이는 시각을 찾아봐요.</span>
       </a>
-      <a class="note" href="earth-science/eclipse.html">
+      <a class="note" data-topic="earth-science" data-grade="2" href="earth-science/eclipse.html">
         <span class="hd"><span class="pic" style="--bsoft:#FFF4DC" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="13.5" cy="16" r="9" fill="#FBBF24" stroke="#B45309" stroke-width="1.3"/><circle cx="19.5" cy="16" r="8" fill="#2B2F55"/><circle cx="22" cy="13" r="1.1" fill="#fff" opacity=".75"/></svg></span><b data-sync="eclipse">일식과 월식 관찰실험</b></span>
         <span class="d">태양, 달, 지구가 한 줄로 놓일 때 생기는 일식과 월식을 우주와 지구에서 함께 봐요.</span>
       </a>
-    </div>
-  </section>
+  </div>
+  <div id="badges" hidden><span data-for="physics"><svg viewBox="0 0 36 36"><path d="M9 5h6v12a3 3 0 0 0 6 0V5h6v12a9 9 0 0 1-18 0z" fill="#F87171" stroke="#2b2f55" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 5h6v5H9zM21 5h6v5h-6z" fill="#E5E7EB" stroke="#2b2f55" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span data-for="chemistry"><svg viewBox="0 0 36 36"><path d="M10 5h16M13 5v10L6.5 28q-1.2 3 2 3h19q3.2 0 2-3L23 15V5" fill="#FFFFFF" stroke="#2b2f55" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.3 22.5h17.4l2.8 5.5q1.2 3-2 3h-19q-3.2 0-2-3z" fill="#FDE68A"/><path d="M13 5v10L6.5 28q-1.2 3 2 3h19q3.2 0 2-3L23 15V5" fill="none" stroke="#2b2f55" stroke-width="1.8" stroke-linejoin="round"/><circle cx="15" cy="26" r="1.6" fill="#fff"/><circle cx="20.5" cy="24.5" r="1.1" fill="#fff"/></svg></span><span data-for="life-science"><svg viewBox="0 0 36 36"><path d="M18 31C10 25 5 20.5 5 14.5 5 10.5 8 7.5 12 7.5c2.6 0 4.7 1.4 6 3.5 1.3-2.1 3.4-3.5 6-3.5 4 0 7 3 7 7 0 6-5 10.5-13 16.5z" fill="#ff7a96" stroke="#2b2f55" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 15.5q0-3.5 3.5-4.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".9"/></svg></span><span data-for="earth-science"><svg viewBox="0 0 36 36"><circle cx="14" cy="21" r="10" fill="#9bb8ff" stroke="#2b2f55" stroke-width="2"/><path d="M8.5 16.5C10 14 13.5 13.5 15 15.5 16 17 14.5 18.5 15.5 20 16.5 21.5 14 23.5 12.5 22.5 11 21.5 10.5 20 9 20 7.5 20 7.5 18 8.5 16.5z" fill="#7fd39b" stroke="#2b2f55" stroke-width="1.4" stroke-linejoin="round"/><path d="M17 25C19 23.5 21.5 24 22 25.5 22.5 27 21 29 19.5 28.5 18 28 16 26.5 17 25z" fill="#7fd39b" stroke="#2b2f55" stroke-width="1.4" stroke-linejoin="round"/><path d="M27 2.5 28.76 7.07 33.66 7.34 29.85 10.43 31.11 15.16 27 12.5 22.89 15.16 24.15 10.43 20.34 7.34 25.24 7.07z" fill="#ffd166" stroke="#2b2f55" stroke-width="1.6" stroke-linejoin="round"/></svg></span></div>
 
   <div class="tray" aria-hidden="true"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="er"></i></div>
 </div>
+<script>
+(function () {
+  var TOPICS = [
+    {id: 'physics', name: '물리', c: 'red'}, {id: 'chemistry', name: '화학', c: 'yellow'},
+    {id: 'life-science', name: '생명과학', c: 'green'}, {id: 'earth-science', name: '지구과학', c: 'blue'}];
+  var GRADES = [{id: 'grade-1', name: '1학년', c: 'red', g: '1'}, {id: 'grade-2', name: '2학년', c: 'yellow', g: '2'}, {id: 'grade-3', name: '3학년', c: 'green', g: '3'}];
+  var pool = document.getElementById('pool'), view = document.getElementById('view');
+  var cards = [].slice.call(pool.querySelectorAll('a.note'));
+  pool.hidden = true;
+  function inCat(card, mode, cat) {
+    return mode === 'topic' ? card.dataset.topic === cat.id : (' ' + (card.dataset.grade || '') + ' ').indexOf(' ' + cat.g + ' ') >= 0;
+  }
+  // 플래그에 개수 달기
+  [['topic', TOPICS], ['grade', GRADES]].forEach(function (pair) {
+    pair[1].forEach(function (cat) {
+      var f = document.querySelector('.flags[data-mode="' + pair[0] + '"] a[href="#' + cat.id + '"]');
+      var n = cards.filter(function (c) { return inCat(c, pair[0], cat); }).length;
+      var b = document.createElement('span'); b.className = 'n'; b.textContent = n; f.appendChild(b);
+    });
+  });
+  function state() {
+    var h = decodeURIComponent(location.hash.slice(1));
+    if (h === 'grade') return {mode: 'grade', cat: null};
+    for (var i = 0; i < GRADES.length; i++) if (GRADES[i].id === h) return {mode: 'grade', cat: GRADES[i]};
+    for (var j = 0; j < TOPICS.length; j++) if (TOPICS[j].id === h) return {mode: 'topic', cat: TOPICS[j]};
+    return {mode: 'topic', cat: null};
+  }
+  function section(mode, cat, list) {
+    var sec = document.createElement('section'); sec.className = 'row cat-' + cat.c;
+    var h = document.createElement('h2'), badge = document.createElement('span');
+    badge.className = 'badge'; badge.setAttribute('aria-hidden', 'true');
+    if (mode === 'topic') badge.innerHTML = document.querySelector('#badges [data-for="' + cat.id + '"]').innerHTML;
+    else { badge.className = 'badge num'; badge.textContent = cat.g; }
+    h.appendChild(badge); h.appendChild(document.createTextNode(cat.name));
+    var cnt = document.createElement('span'); cnt.className = 'count'; cnt.textContent = list.length; h.appendChild(cnt);
+    var line = document.createElement('span'); line.className = 'line'; line.setAttribute('aria-hidden', 'true'); h.appendChild(line);
+    sec.appendChild(h);
+    if (list.length) {
+      var box = document.createElement('div'); box.className = 'notes';
+      list.forEach(function (c) { box.appendChild(c.cloneNode(true)); }); sec.appendChild(box);
+    } else {
+      var e = document.createElement('p'); e.className = 'empty'; e.textContent = '아직 올린 시뮬레이션이 없어요.'; sec.appendChild(e);
+    }
+    return sec;
+  }
+  function render() {
+    var st = state(), cats = st.mode === 'topic' ? TOPICS : GRADES;
+    document.querySelectorAll('.mode').forEach(function (m) { m.setAttribute('aria-current', m.dataset.mode === st.mode ? 'true' : 'false'); });
+    document.querySelectorAll('.flags').forEach(function (f) { f.hidden = f.dataset.mode !== st.mode; });
+    document.querySelectorAll('.flag').forEach(function (f) {
+      f.setAttribute('aria-current', st.cat && f.getAttribute('href') === '#' + st.cat.id ? 'true' : 'false');
+    });
+    view.innerHTML = '';
+    cats.forEach(function (cat) {
+      if (st.cat && st.cat.id !== cat.id) return;
+      var list = cards.filter(function (c) { return inCat(c, st.mode, cat); });
+      if (!st.cat && !list.length) return;   // 전체 보기에서는 빈 분류 숨김
+      view.appendChild(section(st.mode, cat, list));
+    });
+  }
+  // 이미 고른 플래그를 다시 누르면 그 보기 방식의 전체로
+  document.querySelectorAll('.flag').forEach(function (f) {
+    f.addEventListener('click', function (e) {
+      if (f.getAttribute('aria-current') === 'true') { e.preventDefault(); location.hash = state().mode; }
+    });
+  });
+  window.addEventListener('hashchange', render);
+  render();
+})();
+</script>
 </body>
 </html>
