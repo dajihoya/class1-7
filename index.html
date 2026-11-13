@@ -68,6 +68,17 @@ a.note .go{margin-top:auto;padding-top:4px;font-family:var(--display);font-size:
 .tray .c3{left:calc(12% + 96px);width:38px;background:#FFE08A}
 .tray .er{right:14%;bottom:12px;width:70px;height:20px;border-radius:4px;background:linear-gradient(#5A6B8C 0 45%,#E8E1CF 45%)}
 
+[hidden]{display:none!important}
+/* 주제별 / 학년별 보기 전환 */
+.modes{display:inline-flex;align-self:flex-start;gap:4px;border:2px solid rgba(244,241,230,.35);border-radius:999px;padding:4px;background:rgba(255,255,255,.06)}
+.mode{font-family:var(--display);font-size:18px;color:var(--chalk);text-decoration:none;padding:6px 16px;border-radius:999px;line-height:1.3}
+.mode[aria-current="true"]{background:var(--chalk);color:#2F4B3C}
+.mode:focus-visible{outline:3px solid #FFE08A;outline-offset:3px}
+#by-grade{display:flex;flex-direction:column;gap:30px}
+.row.g1{--c:#FF9DB5}.row.g2{--c:#FFE08A}.row.g3{--c:#9CC4FF}
+.row h2 .unit{font-family:var(--body);font-size:14.5px;color:var(--chalk-dim);border:1.5px solid rgba(244,241,230,.3);border-radius:999px;padding:1px 11px;white-space:nowrap}
+#by-grade a.note[data-topic="life-science"]{--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath d='M12 31V18' stroke='%23A8ADB8' stroke-width='1.7' stroke-linecap='round'/%3E%3Cellipse cx='12' cy='17' rx='8.5' ry='3.1' fill='%23DB5279'/%3E%3Cpath d='M7.6 5.6h8.8l-1.7 10h-5.4z' fill='%23FF8FAB'/%3E%3Cellipse cx='12' cy='5.6' rx='6.2' ry='3.3' fill='%23FFC9D6'/%3E%3Cellipse cx='12' cy='5.2' rx='4.2' ry='1.8' fill='%23FF8FAB' opacity='.35'/%3E%3Cpath d='M9.6 8l-.7 6' stroke='%23fff' stroke-opacity='.65' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E")}
+#by-grade a.note[data-topic="earth-science"]{--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath d='M12 31V18' stroke='%23A8ADB8' stroke-width='1.7' stroke-linecap='round'/%3E%3Cellipse cx='12' cy='17' rx='8.5' ry='3.1' fill='%234A7CDD'/%3E%3Cpath d='M7.6 5.6h8.8l-1.7 10h-5.4z' fill='%238DB8FF'/%3E%3Cellipse cx='12' cy='5.6' rx='6.2' ry='3.3' fill='%23CFE0FF'/%3E%3Cellipse cx='12' cy='5.2' rx='4.2' ry='1.8' fill='%238DB8FF' opacity='.35'/%3E%3Cpath d='M9.6 8l-.7 6' stroke='%23fff' stroke-opacity='.65' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E")}
 @media (max-width:560px){
   :root{--frame:8px}
   .row h2{font-size:25px}
@@ -99,11 +110,16 @@ a.note .go{margin-top:auto;padding-top:4px;font-family:var(--display);font-size:
     <div><h1>Science Class <small class="by">by Teacher 노글라쓰</small></h1><p>보고 싶은 시뮬레이션을 골라 열어 보세요.</p></div>
   </header>
 
+  <nav class="modes" aria-label="보기 방식">
+    <a class="mode" href="#topic" data-mode="topic">주제별 보기</a>
+    <a class="mode" href="#grade" data-mode="grade">학년별 보기</a>
+  </nav>
+
   <!-- 생명과학 -->
   <section class="row" id="life-science" aria-labelledby="hLife">
     <h2 id="hLife"><span class="badge" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M18 31C10 25 5 20.5 5 14.5 5 10.5 8 7.5 12 7.5c2.6 0 4.7 1.4 6 3.5 1.3-2.1 3.4-3.5 6-3.5 4 0 7 3 7 7 0 6-5 10.5-13 16.5z" fill="#ff7a96" stroke="#2b2f55" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 15.5q0-3.5 3.5-4.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".9"/></svg></span>생명과학<span class="line" aria-hidden="true"></span></h2>
     <div class="notes">
-      <a class="note" href="life-science/nephron.html">
+      <a class="note" data-topic="life-science" data-grade="2" data-unit="동물과 에너지" href="life-science/nephron.html">
         <span class="hd"><span class="pic" style="--bsoft:#FFF1F4" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M38 6c11 0 20 10 20 25S50 58 38 58c-9 0-13-6-13-12 0-5 4-7 4-14s-4-9-4-14C25 11 29 6 38 6z" fill="#E3476A"/><path d="M24 30c-6 0-10 2-12 6" stroke="#E6B02A" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="37" cy="27" r="3" fill="#2A2140"/><circle cx="48" cy="27" r="3" fill="#2A2140"/><path d="M38 34q5 5 10 0" stroke="#2A2140" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="33" cy="33" r="2.6" fill="#FFB3C4"/><circle cx="52" cy="33" r="2.6" fill="#FFB3C4"/></svg></span><b data-sync="nephron">콩팥의 구조와 기능</b></span>
         <span class="d">콩팥의 구조를 살펴보고, 콩팥 단위에서 오줌이 만들어지는 과정을 따라가요.</span>
       </a>
@@ -114,26 +130,61 @@ a.note .go{margin-top:auto;padding-top:4px;font-family:var(--display);font-size:
   <section class="row earth" id="earth-science" aria-labelledby="hEarth">
     <h2 id="hEarth"><span class="badge" aria-hidden="true"><svg viewBox="0 0 36 36"><circle cx="14" cy="21" r="10" fill="#9bb8ff" stroke="#2b2f55" stroke-width="2"/><path d="M8.5 16.5C10 14 13.5 13.5 15 15.5 16 17 14.5 18.5 15.5 20 16.5 21.5 14 23.5 12.5 22.5 11 21.5 10.5 20 9 20 7.5 20 7.5 18 8.5 16.5z" fill="#7fd39b" stroke="#2b2f55" stroke-width="1.4" stroke-linejoin="round"/><path d="M17 25C19 23.5 21.5 24 22 25.5 22.5 27 21 29 19.5 28.5 18 28 16 26.5 17 25z" fill="#7fd39b" stroke="#2b2f55" stroke-width="1.4" stroke-linejoin="round"/><path d="M27 2.5 28.76 7.07 33.66 7.34 29.85 10.43 31.11 15.16 27 12.5 22.89 15.16 24.15 10.43 20.34 7.34 25.24 7.07z" fill="#ffd166" stroke="#2b2f55" stroke-width="1.6" stroke-linejoin="round"/></svg></span>지구과학<span class="line" aria-hidden="true"></span></h2>
     <div class="notes">
-      <a class="note" href="earth-science/diurnal.html">
+      <a class="note" data-topic="earth-science" data-grade="1" data-unit="태양계" href="earth-science/diurnal.html">
         <span class="hd"><span class="pic" style="--bsoft:#EEF2FF" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 26a11 11 0 0 1 22 0M9 26a7 7 0 0 1 14 0" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3"/><path d="M16 5l1.6 3.4 3.7.4-2.8 2.5.8 3.7-3.3-1.9-3.3 1.9.8-3.7-2.8-2.5 3.7-.4z" fill="#FBBF24" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"/><path d="M3 26h26" stroke="#4B5563" stroke-width="1.8" stroke-linecap="round"/></svg></span><b data-sync="diurnal">천체의 일주운동</b></span>
         <span class="d">천구 모형을 돌리며 별과 태양의 하루 움직임을 살펴봐요.</span>
       </a>
-      <a class="note" href="earth-science/sun-annual.html">
+      <a class="note" data-topic="earth-science" data-grade="1" data-unit="태양계" href="earth-science/sun-annual.html">
         <span class="hd"><span class="pic" style="--bsoft:#FFF7ED" aria-hidden="true"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="17" rx="13" ry="6" fill="none" stroke="#9CA3AF" stroke-width="1.6" stroke-dasharray="3 3"/><circle cx="16" cy="17" r="5" fill="#FB923C" stroke="#9A3412" stroke-width="1.4"/><circle cx="27.5" cy="14" r="2.6" fill="#60A5FA" stroke="#1E3A8A" stroke-width="1.2"/></svg></span><b data-sync="sun-annual">태양의 연주운동</b></span>
         <span class="d">공전 모형과 황도 12궁으로 태양이 별자리 사이를 옮겨 가는 모습을 봐요.</span>
       </a>
-      <a class="note" href="earth-science/moon-phases.html">
+      <a class="note" data-topic="earth-science" data-grade="1" data-unit="태양계" href="earth-science/moon-phases.html">
         <span class="hd"><span class="pic" style="--bsoft:#1E2650" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M19 5a11 11 0 1 0 8 18 9 9 0 0 1-8-18z" fill="#FFE49A"/><circle cx="25" cy="8" r="1.2" fill="#fff"/><circle cx="8" cy="9" r="1" fill="#fff" opacity=".7"/></svg></span><b data-sync="moon-phases">달의 위상 변화 관찰</b></span>
         <span class="d">달을 돌리며 모양이 바뀌는 까닭과 보이는 시각을 찾아봐요.</span>
       </a>
-      <a class="note" href="earth-science/eclipse.html">
+      <a class="note" data-topic="earth-science" data-grade="1" data-unit="태양계" href="earth-science/eclipse.html">
         <span class="hd"><span class="pic" style="--bsoft:#FFF4DC" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="13.5" cy="16" r="9" fill="#FBBF24" stroke="#B45309" stroke-width="1.3"/><circle cx="19.5" cy="16" r="8" fill="#2B2F55"/><circle cx="22" cy="13" r="1.1" fill="#fff" opacity=".75"/></svg></span><b data-sync="eclipse">일식과 월식 관찰실험</b></span>
         <span class="d">태양, 달, 지구가 한 줄로 놓일 때 생기는 일식과 월식을 우주와 지구에서 함께 봐요.</span>
       </a>
     </div>
   </section>
 
+  <!-- 학년별 보기: 카드의 data-grade, data-unit을 보고 자동으로 채움 (2022 개정 교육과정 기준) -->
+  <div id="by-grade" hidden></div>
+
   <div class="tray" aria-hidden="true"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="er"></i></div>
 </div>
+<script>
+(function () {
+  var GRADES = ['1', '2', '3'];
+  var topicRows = [].slice.call(document.querySelectorAll('section.row[id]'));
+  var cards = [].slice.call(document.querySelectorAll('section.row[id] a.note'));
+  var box = document.getElementById('by-grade');
+  GRADES.forEach(function (g) {
+    var list = cards.filter(function (c) { return (' ' + (c.dataset.grade || '') + ' ').indexOf(' ' + g + ' ') >= 0; });
+    if (!list.length) return;   // 아직 자료가 없는 학년은 보이지 않음
+    var sec = document.createElement('section'); sec.className = 'row g' + g;
+    var units = [];
+    list.forEach(function (c) { if (c.dataset.unit && units.indexOf(c.dataset.unit) < 0) units.push(c.dataset.unit); });
+    var h = '<span class="badge" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M5 9c4.5-2.4 9-2.4 13 .8v19.4c-4-3-8.5-3.2-13-.8z" fill="#F4F1E6" stroke="#2b2f55" stroke-width="1.8" stroke-linejoin="round"/><path d="M31 9c-4.5-2.4-9-2.4-13 .8v19.4c4-3 8.5-3.2 13-.8z" fill="#FFFFFF" stroke="#2b2f55" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 14c2.5-.9 5-.8 7 .4M8.5 18.5c2.5-.9 5-.8 7 .4M27.5 14c-2.5-.9-5-.8-7 .4" stroke="#7C8DB5" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></span>' + g + '학년';
+    units.forEach(function (u) { h += '<span class="unit">' + u + '</span>'; });
+    h += '<span class="line" aria-hidden="true"></span>';
+    sec.innerHTML = '<h2>' + h + '</h2>';
+    var notes = document.createElement('div'); notes.className = 'notes';
+    list.forEach(function (c) { notes.appendChild(c.cloneNode(true)); });
+    sec.appendChild(notes); box.appendChild(sec);
+  });
+  function render() {
+    var grade = location.hash === '#grade';
+    box.hidden = !grade;
+    topicRows.forEach(function (r) { r.hidden = grade; });
+    document.querySelectorAll('.mode').forEach(function (m) {
+      m.setAttribute('aria-current', (m.dataset.mode === 'grade') === grade ? 'true' : 'false');
+    });
+  }
+  window.addEventListener('hashchange', render);
+  render();
+})();
+</script>
 </body>
 </html>
