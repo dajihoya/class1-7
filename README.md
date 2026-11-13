@@ -7,6 +7,7 @@
 - `earth-science/diurnal.html` — 천체의 일주운동 시뮬레이션
 - `earth-science/sun-annual.html` — 태양의 연주운동 3D 시뮬레이션
 - `earth-science/moon-phases.html` — 달의 위상 변화 관찰 시뮬레이션
+- `earth-science/eclipse.html` — 일식과 월식 관찰실험 시뮬레이션
 
 `life-science/index.html`, `earth-science/index.html`은 첫 화면의 해당 과목 줄로 넘겨 주는 페이지입니다.
 
